@@ -1,18 +1,18 @@
 {
-  "compilerOptions": {
-    "target": "ESNext", // Cambia esto a ES2020 o superior
-    "module": "ESNext",
-    "lib": ["DOM", "DOM.Iterable", "ESNext"],
-    "strict": true,
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "moduleResolution": "Node",
-    "forceConsistentCasingInFileNames": true,
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noEmit": true,
-    "jsx": "react-jsx"
-  },
+  // "compilerOptions": {
+  //   "target": "ESNext", 
+  //   "module": "ESNext",
+  //   "lib": ["DOM", "DOM.Iterable", "ESNext"],
+  //   "strict": true,
+  //   "esModuleInterop": true,
+  //   "skipLibCheck": true,
+  //   "moduleResolution": "Node",
+  //   "forceConsistentCasingInFileNames": true,
+  //   "resolveJsonModule": true,
+  //   "isolatedModules": true,
+  //   "noEmit": true,
+  //   "jsx": "react-jsx"
+  // },
   "include": ["src/**/*", "callback.ts", "public/js/formHandler.js"],
   "exclude": ["node_modules"],
   "extends": "astro/tsconfigs/strict",
