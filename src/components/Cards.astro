@@ -1,0 +1,947 @@
+
+---
+import type { Card } from '../types/card';
+
+const { card }: { card: Card } = Astro.props;
+
+const textos = [
+  card.veinticuatro,
+  card.soloredes,
+  card.pagadolares,
+  card.pagacripto,
+  card.abiertodomingos,
+  card.trabajodomingos,
+  card.open365
+].filter(Boolean);
+---
+
+
+<div data-card-id={card.id} class="card mt-8 border-gray-600 border max-w-[38rem] rounded-lg bg-gray-800/15 shadow-up shadow-lg shadow-gray-950" data-card={JSON.stringify(card)}>
+  <div  class="custom-scrollbar scrollCard overflow-auto h-[21rem]">
+    <div class="gap-4 flex flex-row items-center bg-transparent rounded-lg  max-w-full  py-4 pl-6 pr-2 h-auto">
+      <div id="controls-carousel" class="relative w-full rounded-lg overflow-hidden  transition-transform duration-300 ease-in-out shadow-lg shadow-gray-100/30" data-carousel="static">
+        <!-- Carousel -->
+        <div class="imagen relative h-64 rounded-lg border-3 border-gray-700">
+          {card.images.map((image, index) => (
+            <div
+              class={`hidden duration-600 ease-in-out rounded-lg ${index === 0 ? 'block' : ''}`}
+              data-carousel-item={index === 0 ? 'active' : ''}
+            >
+              <a 
+              href={image.src}  
+              data-lightbox="galeria"  
+              data-title={`Imagen ${index + 1} de ${card.title}`} 
+              >
+              <img
+              src={image.src} 
+              onclick="abrirEnNuevaPestana(this.src)" 
+              class="cursor-pointer rounded-lg object-cover absolute block w-full h-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
+              alt={`Imagen ${index + 1} de ${card.title}`}
+                />
+              </a>
+            </div>
+          ))}
+        </div>
+        <!-- Slider indicators -->
+        <div class="absolute z-30 flex -translate-x-1/2 bottom-5 left-1/2 space-x-3 rtl:space-x-reverse">
+          {card.images.map((_, index) => (
+            <button
+              type="button"
+              class="w-2 h-2 rounded-full"
+              aria-current={index === 0 ? 'true' : 'false'}
+              aria-label={`Slide ${index + 1}`}
+              data-carousel-slide-to={index}
+            ></button>
+          ))}
+        </div>
+        <!-- Slider controls -->
+        <button
+          type="button"
+          class="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
+          data-carousel-prev
+        >
+          <span class="inline-flex items-center justify-center w-6 h-6 rounded-full border border-gray-500 bg-gray-900/40 group-hover:bg-gray-800/60 group-focus:ring-2 group-focus:ring-gray-800/70 group-focus:outline-none">
+            <svg
+              class="w-2 h-2 text-gray-100 rtl:rotate-180"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 6 10"
+            >
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1 1 5l4 4"/>
+            </svg>
+            <span class="sr-only">Previous</span>
+          </span>
+        </button>
+        <button
+          type="button"
+          class="absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
+          data-carousel-next
+        >
+          <span class="inline-flex items-center justify-center w-6 h-6 rounded-full border border-gray-500 bg-gray-900/40 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-2 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
+            <svg
+              class="w-2 h-2 text-gray-100 rtl:rotate-180"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 6 10"
+            >
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
+            </svg>
+            <span class="sr-only">Next</span>
+          </span>
+        </button>
+      </div>
+      <div class="flex flex-col justify-between pr-3 leading-normal w-3xl h-auto gap-2">
+        <h6 class="estado mb-2 w-16 flex py-1 justify-center text-xs font-bold">{card.estado && card.estado.length > 1 ? card.estado : 'Undefined'} </h6>
+        <h5 class="text-2xl font-bold tracking-tight text-black">{card.title}</h5>
+        <p class="mb-3 text-gray-500 h-24">{card.description}</p>
+        <div class="mt-4">
+          <div class="relative h-[1.8rem] overflow-hidden">
+            {textos.map((texto, index) => (
+              <p class="data-card font-extrabold absolute w-full text-lg opacity-0 translate-y-full transition-all duration-1200 ease-in-out"
+                data-index={index} 
+                set:html={texto}>
+              </p>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div>
+        <a  class="flex scrollBtn justify-center transition-all ease-in duration-500 py-4 cursor-pointer hover:opacity-30">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 1024 1024"><path fill="#556" d="M8.2 275.4c0-8.6 3.4-17.401 10-24.001c13.2-13.2 34.8-13.2 48 0l451.8 451.8l445.2-445.2c13.2-13.2 34.8-13.2 48 0s13.2 34.8 0 48L542 775.399c-13.2 13.2-34.8 13.2-48 0l-475.8-475.8c-6.8-6.8-10-15.4-10-24.199"/></svg>
+        </a>
+      </div>
+      <!-- contacto -->
+      <div class="px-5 ">
+        <div class="flex gap-2 items-center mb-2 ">
+          <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24"><path fill="#789" d="M2 21q-.825 0-1.412-.587T0 19V5q0-.825.588-1.412T2 3h20q.825 0 1.413.588T24 5v14q0 .825-.587 1.413T22 21zm7-7q1.25 0 2.125-.875T12 11t-.875-2.125T9 8t-2.125.875T6 11t.875 2.125T9 14m-6.9 5h13.8q-1.05-1.875-2.9-2.937T9 15t-4 1.063T2.1 19m15.4-7q0-.525.1-1.012t.25-.988H19q.25 0 .45-.1t.35-.3l.675-.9q.225-.3.2-.675t-.3-.65l-.7-.7Q19.4 6.4 19 6.387t-.7.263q-1.075 1-1.687 2.438T16 12t.613 2.913T18.3 17.35q.3.275.7.263t.675-.288l.7-.7q.275-.275.3-.65t-.2-.675l-.675-.9q-.15-.2-.35-.3T19 14h-1.15q-.15-.45-.25-.963T17.5 12"/></svg>
+          <h3 class="p-2font-normal text-gray-300 ">Contactanos aquí</h3>
+        </div>
+        <div class="flex justify-between border border-gray-700 p-5 rounded-lg shadow-lg shadow-gray-950 h-auto">
+          <div>
+            <div class="text-center flex flex-col gap-3">
+                <a  href={card.whatsapp} target="_blank" class="flex items-center gap-4 cursor-pointer contenedor" class:list={{ 'oculto': !card.iconwasap || card.iconwasap.trim() === '' }}>
+                  <svg class="w-6 h-6 contenido-dinamico" set:html={card.iconwasap}></svg>
+                  <p class="text-gray-300 contenido-dinamico">{card.telefono}</p>
+                  <small class="text-slate-600/90 text-xs font-bold ml-1">{card.solollamar}</small>
+                </a>
+              <a href={card.instagramLink} target="_blank" class:list={{ 'oculto': !card.iconinsta || card.iconinsta.trim() === '' }}>
+                <div class="flex gap-4">
+                  <svg class="w-6 h-6" set:html={card.iconinsta}></svg>
+                  <p class="text-gray-300">{card.instagram}</p>
+                </div>
+              </a>
+              <a href={card.facebookLink} target="_blank" class:list={{ 'oculto': !card.iconfacebook || card.iconfacebook.trim() === '' }}>
+                <div class="flex gap-4">
+                  <svg class="w-6 h-6" set:html={card.iconfacebook}></svg>
+                  <p class="text-gray-300">{card.facebook}</p>
+                </div>
+              </a>
+              <a href={card.emailLink} target="_blank" class:list={{ 'oculto': !card.iconemail || card.iconemail.trim() === '' }}>
+                <div class="flex gap-4">
+                  <svg class="w-6 h-6" set:html={card.iconemail}></svg>
+                  <p class="text-gray-300">{card.email}</p>
+                </div>
+              </a>
+              <a href={card.direccionLink} target="_blank" class:list={{ 'oculto': !card.iconubicacion || card.iconubicacion.trim() === '' }}>
+                <div class="flex gap-4">
+                  <svg class="w-6 h-6" set:html={card.iconubicacion}></svg>
+                  <p class="text-gray-300">{card.direccion}</p>
+                </div>
+              </a>
+              <a href={card.web} target="_blank" class:list={{ 'oculto': !card.iconweb || card.iconweb.trim() === '' }}>
+                <div class="flex gap-4">
+                  <svg class="w-6 h-6" set:html={card.iconweb}></svg>
+                  <p class="text-gray-300">{card.web}</p>
+                </div>
+              </a>
+              <a href={card.tiktokLink} target="_blank" class:list={{ 'oculto': !card.icontiktok || card.icontiktok.trim() === '' }}>
+                <div class="flex gap-4">
+                  <svg class="w-6 h-6" set:html={card.icontiktok}></svg>
+                  <p class="text-gray-300">{card.tiktok}</p>
+                </div>
+              </a>
+          </div>
+        </div>
+        <div>
+          <div set:html={card.map} class="flex justify-center h-full border-3 border-gray-600 rounded-lg"></div>
+        </div>
+        </div>
+       </div>      
+    </div>
+    <!-- metodos de pago -->
+   <div class="px-5 mt-10 mb-5">
+    <div>
+      <div class="flex gap-2 items-center mb-2 ">
+        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 20 20"><path fill="#789" d="M11.67 8.537a.3.3 0 0 0-.302.296v2.212a.3.3 0 0 0 .303.296h6.663a.3.3 0 0 0 .303-.296V8.833a.3.3 0 0 0-.303-.296zm4.086-7.036c.922.044 1.585.226 2.005.612c.415.382.628.935.67 1.667v2.097a.674.674 0 0 1-.681.666a.674.674 0 0 1-.682-.666l.001-2.059c-.022-.38-.113-.616-.243-.736c-.126-.116-.51-.22-1.103-.25H2.647c-.537.02-.886.122-1.055.267c-.13.111-.228.417-.229.946l-.003 11.77c.05.514.163.857.308 1.028c.11.13.451.26.953.324h13.116c.614.012.976-.08 1.098-.203c.135-.137.233-.497.233-1.086v-2.045c0-.367.305-.666.682-.666c.376 0 .681.299.681.666v2.045c0 .9-.184 1.573-.615 2.01c-.444.45-1.15.63-2.093.61L2.54 18.495c-.897-.104-1.54-.35-1.923-.803c-.347-.41-.54-.995-.617-1.813V4.044c.002-.876.212-1.535.694-1.947c.442-.38 1.08-.565 1.927-.597zm2.578 5.704c.92 0 1.666.729 1.666 1.628v2.212c0 .899-.746 1.628-1.666 1.628h-6.663c-.92 0-1.666-.73-1.666-1.628V8.833c0-.899.746-1.628 1.666-1.628zm-4.997 1.94c-.46 0-.833.36-.833.803s.373.803.833.803s.833-.36.833-.803s-.373-.804-.833-.804"/></svg>
+        <h3 class="p-2font-normal text-gray-300 ">Metodos de pago</h3>
+      </div>
+      <div class="border border-gray-700 rounded-lg shadow-lg shadow-gray-950 grid grid-cols-2 content-between p-5">
+        <div set:html={card.todoslospagos} class="my-2" class:list={{ 'oculto': !card.todoslospagos || card.todoslospagos.trim() === '' }}></div>
+         <div class="flex gap-2 items-center my-2" class:list={{ 'oculto': !card.visa || card.visa.trim() === '' }}>
+          <div set:html={card.visa}></div>
+          <p class="text-gray-300 font-bold">{card.tarjetasvisa}</p>
+        </div>
+        <div class="flex gap-2 items-center my-2 mr-5" class:list={{ 'oculto': !card.mastercard || card.mastercard.trim() === '' }}>
+          <div set:html={card.mastercard}></div>
+          <p class="text-gray-300 font-bold">{card.tarjetasmaster}</p>
+        </div>
+        <div class="flex gap-2 items-center my-2" class:list={{ 'oculto': !card.iconcash || card.iconcash.trim() === '' }}>
+          <div set:html={card.iconcash}></div>
+          <p class="text-gray-300 font-bold">{card.efectivo}</p>
+        </div>
+        <div class="flex gap-2 items-center my-2"class:list={{ 'oculto': !card.iconmercado || card.iconmercado.trim() === '' }}>
+          <div set:html={card.iconmercado}></div>
+          <p class="text-gray-300 font-bold">{card.mercadopago}</p>
+        </div>
+        <div class="flex gap-2 items-center my-2" class:list={{ 'oculto': !card.cryptos || card.cryptos.trim() === '' }}>
+          <div set:html={card.cryptos}></div>
+          <p class="text-gray-300 font-bold">{card.crypto}</p>
+        </div>
+        <div class="flex gap-2 items-center my-2" class:list={{ 'oculto': !card.icondolares || card.icondolares.trim() === '' }}>
+          <div set:html={card.icondolares}></div>
+          <p class="text-gray-300 font-bold">{card.dolares}</p>
+        </div>
+        <div class="flex gap-2 items-center my-2 " class:list={{ 'oculto': !card.icondebito || card.icondebito.trim() === '' }}>
+          <div set:html={card.icondebito}></div>
+          <p class="text-gray-300 font-bold">{card.debito}</p>
+        </div>
+        
+      </div>
+      </div>
+   </div>
+    <!-- Dias y Horarios -->
+    <div class="px-5 mt-10">
+      <div class="flex items-center justify-between mb-2">
+        <div class="flex gap-2 items-center">
+          <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24"><path fill="#789" d="M12,1A11,11,0,1,0,23,12,11,11,0,0,0,12,1Zm0,20a9,9,0,1,1,9-9A9,9,0,0,1,12,21Z"/><rect width="2" height="7" x="11" y="6" fill="#fff" rx="1"><animateTransform attributeName="transform" dur="9s" repeatCount="indefinite" type="rotate" values="0 12 12;360 12 12"/></rect><rect width="2" height="9" x="11" y="11" fill="#456" rx="1"><animateTransform attributeName="transform" dur="0.75s" repeatCount="indefinite" type="rotate" values="0 12 12;360 12 12"/></rect></svg>
+          <h3 class="p-2font-normal text-gray-300 ">Horarios y Dias laborales</h3>
+        </div>
+       
+        <div class="col-span-2 w-76 grid grid-cols-2 gap-1">
+          <small set:html={card.decorrido}  class="text-black text-sm font-extrabold"></small>
+          <small set:html={card.trabajocorrido}  class="text-black text-sm font-extrabold"></small>
+          <small set:html={card.medioSabados}  class="text-black text-sm font-extrabold"></small>
+          <small set:html={card.medioDomingos}  class="text-black text-sm font-extrabold"></small>
+          <small set:html={card.abiertoferiados} class="text-black text-sm font-extrabold"></small>
+          <small set:html={card.abiertofestivos}  class="text-black text-sm font-extrabold"></small>
+          <small set:html={card.trabajoferiados} class="text-black text-sm font-extrabold"></small>
+          <small set:html={card.trabajofestivos}  class="text-black text-sm font-extrabold"></small>
+        </div>
+      </div>
+      
+      <div class="p-3 border border-gray-700 rounded-lg shadow-lg shadow-gray-950">
+        <!-- Cabecera de la grilla -->
+        <div class="grid grid-cols-3 gap-5 p-5">
+          <p class="text-black font-bold text-lg">Días</p>
+          <p class="text-black font-bold text-lg">Horario AM</p>
+          <p class="text-black font-bold text-lg">Horario PM</p>
+        </div>
+    
+        <!-- Filas de la grilla -->
+        <div class="grid grid-cols-3 gap-4 p-2">
+          <p class="text-white p-2 rounded-md">{card.dias[0]} {card.si}</p>
+          <p class="text-white w-40 p-2 border-gray-700 border rounded-md shadow-md shadow-gray-950 flex justify-between">{card.horaLunes.h1} <small>a</small><small class="text-white text-base">{card.horaLunes.h2} 🕐</small></p>
+          <p class="text-white w-40 p-2 border-gray-700 border rounded-md shadow-md shadow-gray-950 flex justify-between">{card.horaLunes.h3} <small class="mr-1">a</small><small class="text-white text-base">{card.horaLunes.h4} 🕐</small></p>
+        </div>
+    
+        <div class="grid grid-cols-3 gap-4 p-2">
+          <p class="text-white  p-2 rounded-md">{card.dias[1]}{card.si}</p>
+         <p class="text-white w-40  p-2 border-gray-700 border rounded-md shadow-md shadow-gray-950 flex justify-between">{card.horaMartes.h1} <small class="mr-1">a</small><small class="text-white text-base">{card.horaMartes.h2} 🕐</small></p>
+          <p class="text-white w-40  p-2 border-gray-700 border rounded-md shadow-md shadow-gray-950 flex justify-between">{card.horaMartes.h3} <small class="mr-1">a</small><small class="text-white text-base">{card.horaMartes.h4} 🕐</small></p>
+        </div>
+    
+        <div class="grid grid-cols-3 gap-4 p-2">
+          <p class="text-white p-2 rounded-md">{card.dias[2]}{card.si}</p>
+         <p class="text-white w-40 p-2 border-gray-700 border rounded-md shadow-md shadow-gray-950 flex justify-between">{card.horaMiercoles.h1} <small class="mr-1">a</small><small class="text-white text-base">{card.horaMiercoles.h2} 🕐</small></p>
+          <p class="text-white w-40 p-2 border-gray-700 border rounded-md shadow-md shadow-gray-950 flex justify-between">{card.horaMiercoles.h3} <small class="mr-1">a</small><small class="text-white text-base">{card.horaMiercoles.h4} 🕐</small></p>
+        </div>
+    
+        <div class="grid grid-cols-3 gap-4 p-2">
+          <p class="text-white p-2 rounded-md">{card.dias[3]}{card.si}</p>
+         <p class="text-white w-40 p-2 border-gray-700 border rounded-md shadow-md shadow-gray-950 flex justify-between">{card.horaJueves.h1} <small class="mr-1">a</small><small class="text-white text-base">{card.horaJueves.h2} 🕐</small></p>
+          <p class="text-white w-40 p-2 border-gray-700 border rounded-md shadow-md shadow-gray-950 flex justify-between">{card.horaJueves.h3} <small class="mr-1">a</small><small class="text-white text-base">{card.horaJueves.h4} 🕐</small></p>
+        </div>
+    
+        <div class="grid grid-cols-3 gap-4 p-2">
+          <p class="text-white p-2 rounded-md">{card.dias[4]}{card.si}</p>
+         <p class="text-white w-40 p-2 border-gray-700 border rounded-md shadow-md shadow-gray-950 flex justify-between">{card.horaViernes.h1} <small class="mr-1">a</small><small class="text-white text-base">{card.horaViernes.h2} 🕐</small></p>
+          <p class="text-white w-40 p-2 border-gray-700 border rounded-md shadow-md shadow-gray-950 flex justify-between">{card.horaViernes.h3} <small class="mr-1">a</small><small class="text-white text-base">{card.horaViernes.h4} 🕐</small></p>
+        </div>
+    
+        <div class="grid grid-cols-3 gap-4 p-2">
+          <p class="text-white p-2 rounded-md">{card.dias[5]}{card.si}</p>
+          <p class="text-white w-40 p-2 border-gray-700 border rounded-md shadow-md shadow-gray-950 flex justify-between">{card.horaSabado.h1} <small class="mr-1">a</small><small class="text-white text-base">{card.horaSabado.h2} 🕐</small></p>
+          <p class="text-white w-40 p-2 border-gray-700 border rounded-md shadow-md shadow-gray-950 flex justify-between">{card.horaSabado.h3} <small class="mr-1">a</small><small class="text-white text-base">{card.horaSabado.h4} 🕐</small></p>
+        </div>
+    
+        <div class="grid grid-cols-3 gap-4 p-2">
+          <p class="text-white p-2 rounded-md">{card.dias[6]}{card.nodias}</p>
+          <p class="text-white w-40 p-2 border-gray-700 border rounded-md shadow-md shadow-gray-950 flex justify-between">{card.horaDomingo.h1} <small class="mr-1">a</small><small class="text-white text-base">{card.horaDomingo.h2} 🕐</small></p>
+          <p class="text-white w-40 p-2 border-gray-700 border rounded-md shadow-md shadow-gray-950 flex justify-between">{card.horaDomingo.h3} <small class="mr-1">a</small><small class="text-white text-base">{card.horaDomingo.h4} 🕐</small></p>
+          <!-- <p class="text-white  p-2 border-gray-700 border rounded-md">{card.cerrado}</p>
+          <p class="text-white  p-2 border-gray-700 border rounded-md">{card.cerrado}</p> -->
+        </div>
+      </div>
+      <!-- Caja de comentarios -->
+
+      <div class="mt-10">
+        <div class="flex items-center px-2 gap-2 mb-2">
+          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><path fill="#789" d="M18 26h8v2h-8zm0-4h12v2H18zm0-4h12v2H18z"/><path fill="#567" d="M20.549 11.217L16 2l-4.549 9.217L1.28 12.695l7.36 7.175L6.902 30L14 26.269v-2.26l-4.441 2.335l1.052-6.136l.178-1.037l-.753-.733l-4.458-4.347l6.161-.895l1.04-.151l.466-.943L16 6.519l2.755 5.583l.466.943l1.04.151l7.454 1.085L28 12.3z"/></svg>
+          <h3 class=" font-normal text-gray-300">Reseñas</h3>
+        </div>
+      <div>
+        <div class=" p-8 border border-gray-600 rounded-lg shadow-lg shadow-gray-950">
+          <div class="border border-gray-600 p-4 rounded-lg no-hay-comentarios mb-4 bg-gray-900/20 shadow-md shadow-gray-900">       
+            <p class="text-gray-300 text-center">No hay comentarios aùn 😕</p>
+          </div>  
+          <div class="comentarios-container mt-4"></div> 
+
+        <!-- formulario comentarios -->
+
+        <div class="hidden caja-comentarios mb-10" id="caja-comentarios">
+          <form id={`comment-form-${card.id}`} class=" comment-form border border-gray-600 rounded-lg shadow-lg shadow-gray-950">
+            <div class="w-full rounded-lg  p-4">
+                <div class="px-4 py-2 rounded-lg">
+                  <div class="flex w-full justify-between px-2 gap-1 rounded-xs items-center mb-5">
+                    <h5 class="text-gray-300">Deja tu reseña</h5>
+                    <div class="flex gap-2 items-center">
+                        <small class="text-gray-600">Califica con estrellas</small>
+                        <div id="star-rating" class="star-rating cursor-pointer">
+                          <span class="star text-2xl text-gray-600" data-value="1">&#9733;</span>
+                          <span class="star text-2xl text-gray-600" data-value="2">&#9733;</span>
+                          <span class="star text-2xl text-gray-600" data-value="3">&#9733;</span>
+                          <span class="star text-2xl text-gray-600" data-value="4">&#9733;</span>
+                          <span class="star text-2xl text-gray-600" data-value="5">&#9733;</span>
+                        </div>
+                      </div>
+                  </div>
+
+                    <input type="hidden" id="card-id" />
+
+                    <label for="comment-text" class="sr-only text-gray-300">Tú Reseña</label>
+                    <textarea id="comment-text" rows="4" class="w-full px-2 text-xs h-full rounded-lg bg-transparent text-smborder-0  focus:ring-0 text-white placeholder-gray-400" placeholder="Escribe tu reseña" required ></textarea>
+                    
+                </div>
+                <div class="flex items-center justify-between px-3 py-2">
+                    <button type="submit" class="cursor-pointer inline-flex items-center py-2.5 px-4 text-xs border border-gray-600 font-medium text-center text-white bg-cyan-800 rounded-lg  focus:ring-1
+                     hover:bg-cyan-800/60">
+                        Comentar
+                    </button>
+                </div>
+            </div>
+         </form>
+        </div>
+          <div  class="mb-8 estadisticas-tarjeta p-4 bg-gray-900/20 border border-gray-600 rounded-lg shadow-lg shadow-gray-950 mt-4 text-gray-300 text-center" data-card-id={card.id}>Sin calificaciones ✰</div>
+          <div class="flex gap-3 items-center">
+          <button id='abrir-modal-boton' data-modal-target="popup-reseñas" data-modal-toggle="popup-reseñas" type="button" class="shadow-md shadow-black abrir-modal-boton dejar-reseña-btn cursor-pointer w-auto text-center flex  gap-2 text-black border border-black hover:opacity/50 hover:bg-gray-950/10 hover:shadow-md hover:shadow-gray-950 font-medium rounded-lg text-sm px-5 py-2.5"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 16 16"><path fill="#000" fill-rule="evenodd" d="M10 9.5h.621l.44.44l1.51 1.51a.174.174 0 0 0 .295-.136l-.112-1.454l-.062-.809l.642-.495C14.037 8.016 14.5 7.211 14.5 6c0-1.214-.465-2.019-1.17-2.56c-.754-.578-1.902-.94-3.33-.94s-2.576.362-3.33.94C5.966 3.98 5.5 4.786 5.5 6s.465 2.019 1.17 2.56c.754.578 1.902.94 3.33.94m.52 2.02l.99.99a1.673 1.673 0 0 0 2.851-1.312l-.111-1.453C15.33 8.91 16 7.663 16 6c0-3.333-2.686-5-6-5c-2.127 0-3.995.687-5.06 2.06C2.131 3.384 0 5.03 0 8c0 1.663.669 2.911 1.75 3.745l-.111 1.453A1.673 1.673 0 0 0 4.49 14.51L6 13c1.803 0 3.42-.493 4.52-1.48M4.143 4.736Q4.001 5.32 4 6c0 2.905 2.04 4.544 4.759 4.918c-.717.366-1.654.582-2.759.582h-.621l-.44.44l-1.51 1.51a.174.174 0 0 1-.295-.136l.112-1.454l.062-.809l-.642-.495C1.963 10.016 1.5 9.211 1.5 8c0-1.214.465-2.019 1.17-2.56c.391-.3.887-.541 1.473-.704" clip-rule="evenodd"/></svg>Dejar reseña</button>
+          <button id='logout-btn' type="button" class="logout-btn cursor-pointer w-auto text-center hidden text-black border border-black hover:opacity/50 hover:bg-gray-950/10 hover:shadow-xs hover:shadow-gray-700/70 font-medium rounded-lg text-sm px-5 py-2.5">Logout</button>
+          </div>
+        </div>
+      </div>
+      
+      
+      <button data-modal-target="popup-denuncia" data-modal-toggle="popup-denuncia" type="button" class=" my-8 shadow-md shadow-gray-900 cursor-pointer flex  gap-2 text-red-700 border border-red-700 hover:opacity/50 hover:bg-gray-950/10 hover-xs hover:shadow-gray-900/70 font-medium rounded-lg text-sm px-5 py-2.5 text-center"><svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 21 21"><g fill="none" fill-rule="evenodd" stroke="#f70101" stroke-linecap="round" stroke-linejoin="round" transform="translate(2 2)" stroke-width="1"><circle cx="8.5" cy="8.5" r="8"/><path d="M14 3L3 14"/></g></svg> Denunciar</button>
+      <!-- Seccion array para busqueda -->
+      <small class="text-slate-500/60 font-bold ml-1 hidden">{card.enviogratisSearch}</small>
+      <small class="text-slate-500/60 font-bold ml-1 hidden">{card.enviodomicilioSearch}</small>
+  </div>
+  </div>
+</div>   
+
+  <!-- footer -->
+  <div class="border-t border-gray-700 flex justify-between">
+    <div>
+      <p class="text-black text-lg pt-3 font-extrabold px-5 flex items-center h-11">{card.hacemosenvios}
+        <small class="text-slate-600/80 text-lg font-extrabold ml-1">{card.si}</small>
+        <small class="text-slate-600/80 text-lg font-extrabold ml-1">{card.no}</small>
+      </p>
+      <p class="text-black text-lg pt-3 font-extrabold px-5 py-3  flex items-center" class:list={{ 'oculto': !card.voy || card.voy.trim() === '' }}>{card.voy}
+        <small class="text-slate-600/80 text-lg font-extrabold ml-1">{card.sivoy}</small>
+        <small class="text-slate-600/80 text-lg font-extrabold ml-1">{card.novoy}</small>
+      </p>
+      <p class="text-black text-lg font-extrabold pt-2 px-5 flex items-center mb-3" class:list={{ 'oculto': !card.enviogratis || card.enviogratis.trim() === '' }}>{card.enviogratis}
+        <small class="text-slate-500/60 font-extrabold ml-1">{card.sienvios}</small>
+        <small class="text-slate-500/60 font-extrabold ml-1">{card.noenvios}</small>
+        <small class="text-slate-500/60 font-extrabold ml-1">{card.depende}</small>
+      </p>
+    </div>
+    
+    <div class="flex justify-center max-h-full">
+      <div class="flex gap-2 items-end p-3">
+        <a  class="hover:opacity-60 cursor-pointer" href={card.tiktokLink} target="_blank" class:list={{ 'oculto': !card.icontiktok2 || card.icontiktok2.trim() === '' }}>
+          <svg class="w-8 h-8 flex items-end p-0 m-0" set:html={card.icontiktok2}></svg>
+        </a>
+        <a  class="hover:opacity-60 cursor-pointer" href={card.facebookLink} target="_blank" class:list={{ 'oculto': !card.iconfacebook2 || card.iconfacebook2.trim() === '' }}>
+          <svg class="w-8 h-8" set:html={card.iconfacebook2}></svg>
+        </a>
+        <a  class="hover:opacity-60 cursor-pointer" href={card.web} target="_blank" class:list={{ 'oculto': !card.iconweb2 || card.iconweb2.trim() === '' }}>
+          <svg class="w-8 h-8" set:html={card.iconweb2}></svg>
+        </a>
+        <a  class="hover:opacity-60 cursor-pointer" href={card.instagramLink} target="_blank" class:list={{ 'oculto': !card.iconinsta2 || card.iconinsta2.trim() === '' }}>
+          <svg class="w-8 h-8" set:html={card.iconinsta2}></svg>
+        </a>
+        <a  class="hover:opacity-60 cursor-pointer" href={card.whatsapp} target="_blank" class:list={{ 'oculto': !card.iconwasap2 || card.iconwasap2.trim() === '' }}>
+          <svg class="w-8 h-8" set:html={card.iconwasap2}></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type='module'>
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
+import { getFirestore, collection, query, where, onSnapshot, setDoc, doc, orderBy, deleteDoc, getDoc } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js";
+import { getAuth, signOut } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-auth.js";
+
+// Firebase Configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyDavU9YjgE1MM8buptQ1hOOoohrsMOriCs",
+  authDomain: "comercios-unidos-se.firebaseapp.com",
+  projectId: "comercios-unidos-se",
+  storageBucket: "comercios-unidos-se.firebasestorage.app",
+  messagingSenderId: "561779340978",
+  appId: "1:561779340978:web:dfdf091ddec7db324dfbab"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const auth = getAuth();
+
+// Cerrar sesión
+function logout() {
+  // 1. Verificar si auth está inicializado
+  if (!auth) {
+    console.error("Firebase Auth no está inicializado");
+    return;
+  }
+
+  // 2. Cerrar sesión con Firebase
+  signOut(auth)
+    .then(() => {
+      console.log("Sesión cerrada exitosamente");
+      
+      // 3. Limpiar datos locales
+      localStorage.removeItem('isLoggedIn');
+      localStorage.removeItem('userData'); // Limpiar datos adicionales si existen
+      
+      // 4. Redirección mejorada
+      window.location.href = '/'; // Mejor que reload para SPA
+    })
+    .catch((error) => {
+      console.error("Error al cerrar sesión:", error);
+      
+      // 5. Manejo específico de errores
+      if (error.code === "auth/network-request-failed") {
+        alert("Fallo la conexión");
+      } else {
+        alert("Error al cerrar sesión");
+      }
+    });
+}
+
+// 6. Event listeners mejorados
+function setupLogoutButtons() {
+  document.querySelectorAll(".logout-btn").forEach(button => {
+    // Evitar múltiples listeners
+    button.removeEventListener("click", logout); 
+    button.addEventListener("click", (e) => {
+      e.preventDefault();
+      logout();
+    });
+  });
+}
+
+// 7. Ejecutar cuando el DOM esté listo
+document.addEventListener('DOMContentLoaded', setupLogoutButtons);
+
+let isSubmitting = false;
+
+document.querySelectorAll('.comment-form').forEach(form => {
+  let selectedRating = 0;
+  const stars = form.querySelectorAll('.star-rating .star'); // Selecciona solo las estrellas dentro de este formulario
+
+  stars.forEach(star => {
+    star.addEventListener('click', (e) => {
+      selectedRating = parseInt(e.target.getAttribute('data-value'));
+      updateStars(selectedRating, stars);
+    });
+
+    star.addEventListener('mouseover', () => {
+      updateStars(parseInt(star.getAttribute('data-value')), stars);
+    });
+
+    star.addEventListener('mouseout', () => {
+      updateStars(selectedRating, stars);
+    });
+  });
+
+  const submitButton = form.querySelector('button[type="submit"]');
+
+  submitButton.addEventListener('click', async (e) => {
+    e.preventDefault();
+    
+    if (isSubmitting) return;
+    isSubmitting = true;
+    
+    submitButton.disabled = true;
+    submitButton.textContent = "Comentando...";
+
+    const card = form.closest('[data-card-id]');
+    const cardId = card.dataset.cardId;
+
+    const user = auth.currentUser;
+    if (!user) {
+      alert("Debes estar autenticado para comentar.");
+      resetButton(submitButton);
+      return;
+    }
+
+    const username = user.displayName ? user.displayName : user.email;
+    const commentText = form.querySelector('#comment-text').value;
+    
+    if (!commentText || selectedRating == 0) {
+      alert('Por favor, escribe un comentario y selecciona una calificación.');
+      resetButton(submitButton);
+      return;
+    }
+
+    const commentRef = doc(db, "cards", cardId, "comments", username);
+    
+    try {
+      const commentSnap = await getDoc(commentRef);
+      if (commentSnap.exists()) {
+        alert("Solo puedes comentar una vez.");
+        resetButton(submitButton);
+        form.reset();
+        updateStars(0, stars);
+        return;
+      }
+
+      await setDoc(commentRef, {
+        cardId: cardId,
+        username: username,
+        comment: commentText.trim(),
+        rating: selectedRating,
+        timestamp: new Date()
+      });
+
+      mostrarComentarios(cardId);
+
+      console.log(`✅ Comentario de ${username} guardado en la tarjeta ${cardId}`);
+      form.reset();
+      updateStars(0, stars);
+      submitButton.textContent = "✓ Enviado";
+
+    } catch (error) {
+      console.error(`❌ Error en la tarjeta ${cardId}:`, error);
+      
+      if (error.code === "unavailable") {
+        alert("No tienes conexión a Internet.");
+      } else {
+        alert("Ocurrió un error inesperado");
+      }
+
+      resetButton(submitButton);
+
+    } finally {
+      setTimeout(() => resetButton(submitButton), 2000);
+    }
+  });
+
+  function updateStars(rating, stars) {
+    stars.forEach(star => {
+      if (parseInt(star.getAttribute('data-value')) <= rating) {
+        star.classList.add('selected');
+      } else {
+        star.classList.remove('selected');
+      }
+    });
+  }
+});
+
+function resetButton(button) {
+  button.disabled = false;
+  button.textContent = "Comentar";
+  isSubmitting = false;
+}
+
+
+// Función de mostrar comentarios
+function mostrarComentarios(cardId) {
+  const comentariosContainer = document.querySelector(`[data-card-id="${cardId}"] .comentarios-container`);
+  const noComentariosDiv = document.querySelector(`[data-card-id="${cardId}"] .no-hay-comentarios`);
+
+  if (!comentariosContainer) {
+    console.error(`No se encontró el contenedor para card ${cardId}`);
+    return;
+  }
+
+  const q = query(collection(db, "cards", cardId, "comments"), orderBy("timestamp", "desc"));
+
+  onSnapshot(q, (snapshot) => {
+    comentariosContainer.innerHTML = '';
+
+    const user = auth.currentUser;
+
+    if (snapshot.empty) {
+      noComentariosDiv.style.display = 'block';
+    } else {
+      noComentariosDiv.style.display = 'none';
+    }
+
+    snapshot.forEach((doc) => {
+      const comentario = doc.data();
+      const comentarioId = doc.id;
+
+      comentariosContainer.innerHTML += `
+        <article data-comment-id="${comentarioId}" class=" shadow-lg shadow-gray-950 comentario mb-8 border border-gray-600 p-4 rounded-lg bg-gray-900/20 text-white shadow-lg">
+          <div class="flex items-center justify-between mb-2">
+            <div class="font-medium">
+              <p class="flex flex-col text-lg">
+                ${comentario.username} 
+                <time class="text-sm text-gray-400">${comentario.timestamp?.toDate().toLocaleString()}</time>
+              </p>
+            </div>
+            <div class="flex gap-2">
+              ${user && comentario.username === user.displayName ? `
+                <button class="borrar-btn text-red-500 hover:text-red-400 transition cursor-pointer" data-id="${comentarioId}">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 32 32"><path fill="currentColor" d="M13.5 6.5V7h5v-.5a2.5 2.5 0 0 0-5 0m-2 .5v-.5a4.5 4.5 0 1 1 9 0V7H28a1 1 0 1 1 0 2h-1.508L24.6 25.568A5 5 0 0 1 19.63 30h-7.26a5 5 0 0 1-4.97-4.432L5.508 9H4a1 1 0 0 1 0-2zM9.388 25.34a3 3 0 0 0 2.98 2.66h7.263a3 3 0 0 0 2.98-2.66L24.48 9H7.521zM13 12.5a1 1 0 0 1 1 1v10a1 1 0 1 1-2 0v-10a1 1 0 0 1 1-1m7 1a1 1 0 1 0-2 0v10a1 1 0 1 0 2 0z"/></svg>
+                </button>
+              ` : ''}
+            </div>
+          </div>
+          <div class="flex items-center mb-5 space-x-1 rtl:space-x-reverse">
+            ${Array(5).fill().map((_, i) => `
+              <svg class="w-4 h-4 ${i < comentario.rating ? 'text-yellow-300' : 'text-gray-500'}" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
+              </svg>
+            `).join('')}
+            <h3 class="ms-2 text-sm font-semibold text-gray-300">${comentario.rating || 3}/5</h3>
+          </div>
+          <p class="mb-2 text-gray-400">${comentario.comment}</p>
+        </article>
+      `;
+    });
+    asignarEventosComentarios();
+  });
+}
+
+// Asignar evento a los botones de eliminar comentarios
+function asignarEventosComentarios() {
+  document.addEventListener('click', (e) => {
+    const target = e.target;
+    const comentarioDiv = target.closest('.comentario');
+    
+    if (target.closest('.borrar-btn')) {
+      const comentarioId = target.closest('.borrar-btn').dataset.id;
+      const cardId = comentarioDiv.closest('[data-card-id]').dataset.cardId;
+      const comentarioRef = doc(db, "cards", cardId, "comments", comentarioId);
+
+      if (confirm('¿Eliminar este comentario?')) {
+        deleteDoc(comentarioRef)
+          .then(() => {
+            comentarioDiv.style.opacity = '0';
+            setTimeout(() => comentarioDiv.remove(), 300);
+          })
+          .catch((error) => {
+            console.error("Error al eliminar el comentario:", error);
+
+            if (error.code === "unavailable") {
+              console.error("Ocurrio un error de conexión.");
+            }
+          });
+      }
+    }
+  });
+}
+
+// Calculo de calificaciones de estrellas
+
+function calcularEstadisticas(cardId) {
+  const comentariosRef = collection(db, "cards", cardId, "comments");
+
+  onSnapshot(comentariosRef, (snapshot) => {
+    if (snapshot.empty) return;
+
+    let totalComentarios = 0;
+    let sumaCalificaciones = 0; // Nuevo: Para calcular el promedio
+    let conteoEstrellas = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
+
+    snapshot.forEach(doc => {
+      const data = doc.data();
+      const rating = parseInt(data.rating);
+      if (rating >= 1 && rating <= 5) {
+        conteoEstrellas[rating]++;
+        totalComentarios++;
+        sumaCalificaciones += rating; // Sumamos para el promedio
+      }
+    });
+
+    const estadisticasDiv = document.querySelector(`[data-card-id="${cardId}"] .estadisticas-tarjeta`);
+    if (!estadisticasDiv) return;
+
+    // Calcular promedio (con 1 decimal)
+    const promedio = totalComentarios > 0 
+      ? (sumaCalificaciones / totalComentarios).toFixed(1) 
+      : "0";
+
+    let estadisticasHTML = `
+      <div class="mb-4">
+        <h3 class='font-semibold text-lg flex items-center gap-2'>
+          ${totalComentarios} Calificaciones 
+          <span class="flex items-center text-yellow-500">
+            ${promedio} ★
+          </span>
+        </h3>
+      </div>`;
+
+    for (let estrella = 5; estrella >= 1; estrella--) {
+      let porcentaje = totalComentarios > 0 
+        ? (conteoEstrellas[estrella] / totalComentarios * 100).toFixed(1) 
+        : 0;
+      
+      estadisticasHTML += `
+        <div class='flex items-center mt-2'>
+          <span class='font-medium w-6'>${estrella}⭐</span>
+          <div class='w-full bg-gray-700/70 rounded-lg h-3 mx-2'>
+            <div class='bg-yellow-600 h-3 rounded-lg' style='width: ${porcentaje}%;'></div>
+          </div>
+          <span class='text-sm text-gray-500 w-12 text-right'>
+             (${porcentaje}%)
+          </span>
+        </div>`;
+    }
+    
+    estadisticasDiv.innerHTML = estadisticasHTML;
+  });
+}
+
+// Ejecutar la función para cada tarjeta al cargar la página
+document.querySelectorAll("[data-card-id]").forEach(card => {
+  calcularEstadisticas(card.dataset.cardId);
+});
+
+
+// verificar login
+
+function verificarEstadoDeLoginYDeshabilitarBoton() {
+  // Esperar a que el DOM esté listo
+  document.addEventListener('DOMContentLoaded', () => {
+    const estaLogueado = localStorage.getItem('isLoggedIn') === 'true';
+    const logoutBtn = document.querySelector(".logout-btn");
+
+    if (!logoutBtn) {
+      console.error("No se encontró el botón de logout");
+      return;
+    }
+
+    // Mostrar/ocultar elementos según el estado de login
+    const botonesAbrirModal = document.querySelectorAll('.abrir-modal-boton');
+    const cajasComentarios = document.querySelectorAll('.caja-comentarios');
+
+    if (estaLogueado) {
+      // Usuario logueado
+      botonesAbrirModal.forEach(boton => {
+        boton.textContent = 'Cambiar usuario';
+        boton.classList.remove('hidden');
+      });
+
+      cajasComentarios.forEach(caja => {
+        caja.classList.remove('hidden');
+      });
+
+      logoutBtn.classList.remove('hidden');
+    } else {
+      // Usuario no logueado
+      botonesAbrirModal.forEach(boton => {
+        boton.textContent = 'Dejá tu reseña';
+      });
+
+      cajasComentarios.forEach(caja => {
+        caja.classList.add('hidden');
+      });
+
+      logoutBtn.classList.add('hidden');
+    }
+  });
+}
+
+// ampliar imagen
+
+function abrirEnNuevaPestana(url) {
+    const ventana = window.open('', '_blank');
+    ventana.document.write(`
+      <html>
+        <head><title>Imagen</title></head>
+        <body style="margin: 0; background: #000;">
+          <img src="${url}" style="max-width: 100%; height: auto; display: block; margin: auto;">
+        </body>
+      </html>
+    `);
+    ventana.document.close();
+  }
+
+
+// Llamar a la función al cargar la página
+verificarEstadoDeLoginYDeshabilitarBoton();
+
+// Llamar al cargar la página y cuando cambie el estado de login
+document.addEventListener('DOMContentLoaded', verificarEstadoDeLoginYDeshabilitarBoton);
+
+// verificar estado
+
+
+  function verificarEstado() {
+    // Obtén todas las cards
+    const contenedores = document.querySelectorAll('.card');
+
+    contenedores.forEach(contenedor => {
+      // Obtén el objeto card desde el atributo data-card de cada card
+      const card = JSON.parse(contenedor.dataset.card);
+
+      // Asegúrate de que card tenga los horarios correctos para cada día
+      const horariosPorDia = {
+        0: card.horaDomingo,    // Domingo
+        1: card.horaLunes,      // Lunes
+        2: card.horaMartes,     // Martes
+        3: card.horaMiercoles,  // Miércoles
+        4: card.horaJueves,     // Jueves
+        5: card.horaViernes,    // Viernes
+        6: card.horaSabado      // Sábado
+      };
+
+      // Obtén la hora actual
+      const horaActual = new Date();
+      const hora = horaActual.getHours();
+      const minutos = horaActual.getMinutes();
+      const diaSemana = horaActual.getDay();  // 0: Domingo, 1: Lunes, ..., 6: Sábado
+
+      // Obtiene los horarios para el día actual
+      const horariosHoy = horariosPorDia[diaSemana];
+
+      // Si no hay horarios para hoy, salimos
+      if (!horariosHoy) {
+        console.error("Horarios no definidos para este día");
+        return;
+      }
+
+      // Función para convertir la hora a minutos desde medianoche
+      function convertirAMinutos(horaStr) {
+        const [hora, minutos] = horaStr.split(':').map(Number);
+        return hora * 60 + minutos;
+      }
+
+      // Verifica el estado del día
+      let estaAbierto = false;
+
+      // Convierte los horarios a minutos desde medianoche
+      const h1 = convertirAMinutos(horariosHoy.h1);
+      const h2 = convertirAMinutos(horariosHoy.h2);
+      const h3 = convertirAMinutos(horariosHoy.h3);
+      const h4 = convertirAMinutos(horariosHoy.h4);
+      const minutosActuales = hora * 60 + minutos;
+
+      // Si la hora actual está entre h1-h2 o h3-h4, está abierto
+      if ((minutosActuales >= h1 && minutosActuales < h2) || (minutosActuales >= h3 && minutosActuales < h4)) {
+        estaAbierto = true;
+      }
+
+      // Actualiza el contenido del elemento <h6> dentro de la card
+      const estadoElement = contenedor.querySelector('.estado');
+      if (estadoElement) {
+        estadoElement.textContent = estaAbierto ? 'Abierto' : 'Cerrado';
+        estadoElement.style.color = estaAbierto ? '#4caf50' : '#B82132';
+        estadoElement.classList.add ('border', 'rounded-md')
+      } else {
+        console.error("Elemento con clase 'estado' no encontrado en una card.");
+      }
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    console.log("DOM cargado, verificando estado...");
+    verificarEstado();
+    setInterval(verificarEstado, 600000);
+
+  // Funcion scroll
+  const cards = document.querySelectorAll('.scrollCard'); 
+  const buttonsScroll = document.querySelectorAll('.scrollBtn'); 
+  
+  buttonsScroll.forEach((button, index) => {
+    button.addEventListener('click', function() {
+      const card = cards[index]; 
+      
+      function slowScroll() {
+        let currentScroll = card.scrollTop;
+        let targetScroll = currentScroll + 320; 
+        let step = 15;  
+        
+        function animateScroll() {
+          if (currentScroll < targetScroll) {
+            currentScroll += step;
+            card.scrollTop = currentScroll;
+            requestAnimationFrame(animateScroll);  
+          }
+        }
+        animateScroll();  
+      }
+      slowScroll();
+    });
+  });
+
+//  slider de textos
+
+const cardio = Array.from(document.querySelectorAll("[data-card]")); // Asegúrate de agregar data-card a cada card
+
+cardio.forEach((card) => {
+  // Selecciona solo los textos de esta card que no estén vacíos
+  const texts = Array.from(card.querySelectorAll("[data-index]")).filter(
+    (e) => e.innerText.trim() !== ""
+  );
+  const total = texts.length;
+
+  if (total > 0) {
+    let index = 0;
+
+    // Inicializa el primer texto de la card como visible
+    texts[0]?.classList.add("opacity-100", "translate-y-0");
+
+    // Función para cambiar textos en esta card específica
+    function cambiarTexto() {
+      texts[index].classList.remove("opacity-100", "translate-y-0");
+      texts[index].classList.add("opacity-0", "translate-y-full");
+
+      index = (index + 1) % total;
+
+      texts[index].classList.remove("opacity-0", "translate-y-full");
+      texts[index].classList.add("opacity-100", "translate-y-0");
+    }
+
+    // Inicia el intervalo para esta card
+    setInterval(cambiarTexto, 10000);
+  }
+});
+
+// MUESTRA COMENTARIOS EN L PAGINA AL INICIAR
+
+document.querySelectorAll('[data-card-id]').forEach(card => {
+    const cardId = card.dataset.cardId;
+    mostrarComentarios(cardId);
+    calcularEstadisticas(cardId); 
+  });
+
+  });
+</script>
+
+
+
+
+
+
+
+
+

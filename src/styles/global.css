@@ -1,0 +1,179 @@
+@import "tailwindcss";
+@import 'flowbite';
+
+/* styles.css */
+.custom-scrollbar::-webkit-scrollbar {
+    width: 10px;
+
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: #333;
+    border-top-right-radius: 6px;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #345;
+    border-radius: 6px;
+  }
+  
+
+  .shadow-up:hover{
+    box-shadow: -.3px -.3px 15px #789, .3px .3px 15px #789;
+   
+  }
+
+  .shadow-mu{
+    box-shadow: -.5px -.5px 6px #567, .5px .5px 6px #567;
+  }
+
+  .oculto {
+    display: none;
+  }
+
+  #previewContainer {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 10px;
+  }
+
+  .image-preview {
+    width: 55px;
+    height: 55px;
+    margin: 5px;
+    background-size: cover;
+    background-position: center;
+    border-radius: 5px;
+    display: none; /* Ocultar inicialmente */
+  }
+
+  .disable{
+    opacity: .6;
+    cursor: none;
+  }
+
+  input[type="checkbox"] {
+    outline: none; /* Elimina el borde que aparece en focus */
+  }
+  
+  input[type="checkbox"]:focus {
+    outline: none;
+    box-shadow: none;
+    
+  }
+
+  upload-button {
+    background-color: #007bff;  /* Azul calmado */
+    color: white;
+    font-size: 16px;
+    padding: 12px 30px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+  
+input:-webkit-autofill {
+  background-color: rgba(0, 0, 0, 0.7) !important; /* Fondo oscuro con transparencia */
+  color: white !important; /* Texto claro */
+  -webkit-text-fill-color: white !important; /* Asegura que el texto sea blanco */
+  transition: background-color 5000s ease-in-out 0s; /* Mantiene el fondo oscuro */
+}
+
+input:-webkit-autofill::first-line {
+  color: white !important; /* Asegura que el primer texto no cambie de color */
+}
+
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus {
+  background-color: rgba(0, 0, 0, 0.7) !important; /* Mantiene el fondo oscuro al interactuar */
+  color: white !important;
+}
+
+
+#cusdis_thread {
+  max-height: none !important;
+  height: auto !important;
+  overflow: visible !important;
+}
+
+#cusdis_thread iframe {
+  min-height: 500px !important;
+  height: auto !important;
+  width: 100% !important;
+}
+
+#cusdis_thread iframe{
+  color: white !important
+}
+
+/* Ajustar los inputs y textarea */
+#cusdis_thread input,
+#cusdis_thread textarea {
+  border: 2px solid #ccc !important; /* Borde personalizado */
+  border-radius: 8px !important; /* Esquinas redondeadas */
+  padding: 10px !important; /* Espaciado interno */
+  font-size: 16px !important; /* Tamaño del texto */
+  color: #333 !important; /* Color del texto */
+  width: 100% !important; /* Que ocupe todo el ancho disponible */
+}
+
+/* Cambiar el fondo y color del texto */
+#cusdis_thread textarea {
+  background-color: #f9f9f9 !important; /* Fondo más claro */
+  min-height: 150px !important; /* Altura mínima */
+}
+
+/* Personalizar el botón de enviar */
+#cusdis_thread button {
+  background-color: #007bff !important; /* Color azul */
+  color: white !important; /* Texto en blanco */
+  padding: 10px 15px !important;
+  border-radius: 5px !important;
+  font-weight: bold !important;
+  transition: background 0.3s !important;
+}
+
+#cusdis_thread button:hover {
+  background-color: #0056b3 !important; /* Color más oscuro al pasar el mouse */
+}
+
+#cusdis_thread label {
+  font-size: 14px !important;
+  font-weight: bold !important;
+  color: #555 !important;
+  margin-bottom: 5px !important;
+  display: block !important; /* Para que no se vea inline */
+}
+
+
+.star {
+  font-size: 25px;
+  color: #ddd;
+}
+
+.star.selected, .star:hover {
+  color: #f39c12;
+}
+
+
+.lightbox .lb-image {
+  border: 5px solid #fff; /* Borde blanco */
+  border-radius: 3px;
+}
+
+.lb-nav a.lb-next, 
+.lb-nav a.lb-prev {
+  opacity: 0.9; /* Botones de navegación */
+}
+
+
+
+
+
+
+  
+
+  
+

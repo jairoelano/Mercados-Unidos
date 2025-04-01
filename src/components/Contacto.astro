@@ -1,0 +1,212 @@
+---
+const siteKey = "0x4AAAAAABCNmOzraV7rhN1s";
+---
+
+<div id="popup-contacto" tabindex="-1" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+    <div class="relative p-5 w-full max-w-md h-auto bg-gray-950/90 rounded-md">
+        <div class="relative rounded-lg  border border-gray-500">
+            <button type="button" class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="popup-contacto">
+                <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                </svg>
+                <span class="sr-only">Close modal</span>
+            </button>
+            <div class="p-4 text-center flex flex-col gap-4">
+                <div class="flex w-ful justify-center mt-5">
+                    <img src="../../public/IMGs/logo.png" class=" w-18 object-cover rounded-full border-3 border-cyan-800" alt="logo">
+                </div>
+                <div class="flex gap-4 mt-3">
+                    <svg class="w-6 h-6" fill='#fff' role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>mailbox.org</title><path d="M2.229 22.844H24V10.501l-8.628 5.882c-.613.419-1.226-.003-1.226-.003L0 6.646v13.969s0 2.229 2.229 2.229m12.558-9.273L24 7.261V1.156H2.229S0 1.156 0 3.384v.06l14.787 10.127Z"/></svg>
+                    <p class="text-gray-300">mercadosunidos_se@gmail.com</p>
+                </div>
+                <small class="text-cyan-600 text-xs mt-2">Escribenos a nuestro email. Sino mandanos tu mensaje junto con tu email y te contactaremos a la brevedad. No ponemos otros medios de contactos por cuestiones de seguridad.</small>
+                <form id="contact-Form">
+                    <div class="flex text-gray-100 gap-2 items-center mt-3 mb-1">
+                        <label class="text-xs" for="email">E-mail:</label>
+                        <input type="email" id="email" class="border-cyan-600 w-80 h-8 text-xs rounded-lg bg-transparent outline-none focus:border-none placeholder:text-xs" placeholder="mariagonalez_1@gmail.com">
+                    </div>
+                    <div class="mt-3 mb-3 flex justify-start">
+                      <p id="validacion-email" style="display: none"></p>
+                    </div>
+                    <div class="text-gray-100 flex flex-col gap-2 items-start w-full">
+                        <label class="text-xs" for="mensaje">Mensaje:</label>
+                        <textarea class="w-full text-xs border-cyan-600 bg-transparent rounded-lg h-36" name="mensaje" id="mensaje" placeholder="Escribe tu mensaje aquí..."></textarea>
+                    </div>
+                    <div class="mt-3 mb-2 flex justify-start">
+                      <p id="validacion-descripcion" style="display: none"></p>
+                    </div>
+                    <div class="flex mt-4 mb-2">
+                      <div class="cf-turnstile" data-sitekey={siteKey}></div>
+                    </div>
+                    <button type="submit" id='submit-btn' class="cursor-pointer rounded-lg mt-2 text-gray-300 border border-gray-400 bg-cyan-900 w-full h-12">Enviar</button>
+                </form>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="module">
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js';
+import { getFirestore, getDoc, setDoc, doc, enableIndexedDbPersistence } from 'https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js';
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDavU9YjgE1MM8buptQ1hOOoohrsMOriCs",
+  authDomain: "comercios-unidos-se.firebaseapp.com",
+  projectId: "comercios-unidos-se",
+  storageBucket: "comercios-unidos-se.firebasestorage.app",
+  messagingSenderId: "561779340978",
+  appId: "1:561779340978:web:dfdf091ddec7db324dfbab"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+enableIndexedDbPersistence(db)
+    .then(() => {
+        console.log("Persistencia offline habilitada");
+    })
+    .catch((error) => {
+        console.error("Error al habilitar la persistencia offline:", error);
+    });  
+
+document.addEventListener('DOMContentLoaded', function () {
+  const form = document.getElementById('contact-Form');
+  const emailInput = document.getElementById('email');
+  const mensajeInput = document.getElementById('mensaje');
+  const submitBtn = document.getElementById('submit-btn');
+
+  if (form && emailInput && mensajeInput && submitBtn) {
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Enviando...';
+
+      let email = emailInput.value.trim().toLowerCase();
+
+      
+      email = email.replace(/\./g, '_').replace(/[^a-zA-Z0-9_@-]/g, ''); 
+
+      console.log("Email procesado:", email);
+
+      if (!email) {
+        alert("Coloca un e-mail de contacto.");
+        submitBtn.disabled = false;
+        return;
+      }
+
+      if(mensajeInput.value === ''){
+      alert("¡Por favor! Escribe un mensaje.");
+        submitBtn.disabled = false;
+        return;
+      }
+
+      if(mensajeInput.value.length <= 49){
+      alert("El mensaje debe tener min 50 caracteres.");
+        submitBtn.disabled = false;
+        return;
+      }
+
+      try {
+        
+        const docRef = doc(db, 'contacto', email);
+        console.log("ID del documento que estamos intentando verificar:", docRef.id);
+
+        const docSnap = await getDoc(docRef);
+        console.log("Documento ya existe:", docSnap.exists()); 
+
+        if (docSnap.exists()) {
+          alert("Este e-mail ya ha enviado un mensaje. Te responderemos a la brevedad.");
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Enviar';
+          return;
+        }
+
+        await setDoc(docRef, {
+          email: email,
+          mensaje: mensajeInput.value.trim(),
+          timestamp: new Date()
+        });
+
+        console.log("Documento guardado con ID:", docRef.id);
+        alert("Tu mensaje fue enviado exitosamente. ¡Gracias! 😀");
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Enviar';
+        form.reset();
+
+      } catch (e) {
+        console.error("Error al guardar el mensaje:", e);
+        alert("Hubo un error al enviar el mensaje.");
+      }
+
+      submitBtn.disabled = false;
+    });
+  } else {
+    console.error("Error al cargar el formulario");
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Enviar';
+  }
+});
+
+// VALIDACION
+
+document.getElementById("mensaje").addEventListener("keyup", function() {
+  const descripcion = this.value;
+  const mensajeDescripcion = document.getElementById("validacion-descripcion");
+
+  if (descripcion === "") {
+    mensajeDescripcion.textContent = "❌ Debes poner un mensaje de 50 caracteres min.";
+    mensajeDescripcion.style.display = "block";
+    mensajeDescripcion.classList.add('text-red-800', 'text-xs', 'font-bold');
+    mensajeDescripcion.classList.remove('text-green-500');
+    return
+  }
+
+  if (descripcion.length >= 50 && descripcion.length <= 500) {
+    mensajeDescripcion.textContent = "✅ Descripción válida";
+    mensajeDescripcion.style.display = "block";
+    mensajeDescripcion.classList.add('text-green-500', 'text-xs', 'font-bold');
+    mensajeDescripcion.classList.remove('text-red-800');
+  } else {
+    mensajeDescripcion.textContent = "❌ El mensaje debe tener entre 50 y 500 caracteres.";
+    mensajeDescripcion.style.display = "block";
+    mensajeDescripcion.classList.add('text-red-800', 'text-xs', 'font-bold');
+    mensajeDescripcion.classList.remove('text-green-500');
+  }
+});
+
+document.getElementById("email").addEventListener("keyup", function() {
+    const email = this.value;
+    const mensajeEmail = document.getElementById("validacion-email");
+
+    if (email === "") {
+      mensajeEmail.textContent = "❌ Debes poner una e-mail";
+      mensajeEmail.style.display = "block";
+      mensajeEmail.style.color = "red"
+      mensajeEmail.classList.add('text-xs', 'font-bold');
+      mensajeEmail.classList.remove('text-green-500'); 
+    return; 
+  }
+
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (regex.test(email)) {
+      mensajeEmail.textContent = "✅ Correo válido";
+      mensajeEmail.style.display = "block";
+      mensajeEmail.style.color = "green"
+      mensajeEmail.classList.add('text-xs', 'font-bold')
+
+    } else {
+      mensajeEmail.textContent = "❌ Correo inválido, aún te falta. Ej: micorreo@email.com";
+      mensajeEmail.style.display = "block";
+      mensajeEmail.style.color = "red"
+      mensajeEmail.classList.add('text-xs', 'font-bold')
+    }
+  });
+  </script>
+  
+  
+  
+  
+  

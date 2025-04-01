@@ -1,22 +1,44 @@
+---
+import '../styles/global.css';
+---
+
 <!doctype html>
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link id="favicon" rel="icon" type="image" href="/IMGs/logo.ico" />
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=task_alt" />
 		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
+		<title>Mercados Unidos</title>
 	</head>
 	<body>
+		
+		
 		<slot />
+		
+		</div>
+		<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+		<script src="https://upload-widget.cloudinary.com/global/all.js" type="text/javascript"></script>
+		<script type="module" src="https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js"></script>
+		<script type="module" src="https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js"></script>
+		<script is:inline src="https://cdn.jsdelivr.net/npm/flowbite@3.0.0/dist/flowbite.min.js"></script>
+	
 	</body>
+	
 </html>
 
 <style>
 	html,
 	body {
+		font-family: "Raleway", sans-serif;
 		margin: 0;
 		width: 100%;
 		height: 100%;
+		background-color: #222223;
+		background-image: linear-gradient(0deg, #222223 0%, #2a2a2d 22%, #2c2d31 49%, #2a2a2d 75%, #222223 100%);
 	}
 </style>

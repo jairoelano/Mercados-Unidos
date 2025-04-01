@@ -1,0 +1,96 @@
+
+<div class="h-44 flex justify-end items-end relative mr-10">
+  <div class="absolute top-50 left-130 z-50">
+    <p id="noResultsMessage" class=" hidden text-cyan-500 text-lg "><svg class="w-full mb-2" xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64"><path fill="#1dabf1" d="M32 2C15.428 2 2 15.428 2 32s13.428 30 30 30s30-13.428 30-30S48.572 2 32 2m0 57.5C16.836 59.5 4.5 47.164 4.5 32S16.836 4.5 32 4.5S59.5 16.836 59.5 32c0 1.357-.103 2.69-.294 3.996c-.838-5.66-5.69-10.766-5.69-10.766s-5.828 6.113-5.828 12.375c0 6.353 6.393 7.996 9.708 4.937C53.251 52.488 43.431 59.5 32 59.5"/><circle cx="38.498" cy="35" r="5" fill="#1dabf1"/><circle cx="15.498" cy="35" r="5" fill="#1dabf1"/><path fill="#1dabf1" d="M21.992 21.58c.541-.469-.971-2.061-1.414-1.674a14.23 14.23 0 0 1-11.693 3.133c-.578-.113-1.088 2.021-.385 2.156a16.42 16.42 0 0 0 13.492-3.615m23.121 1.307c-4.168.748-8.455-.4-11.691-3.133c-.443-.389-1.955 1.205-1.412 1.674a16.42 16.42 0 0 0 13.492 3.615c.703-.135.191-2.27-.389-2.156M38.074 47.33c-5.766-1.549-12.049-.428-16.93 3.014c-1.205.869 1.053 4.027 2.252 3.152c3.223-2.268 8.352-3.834 13.66-2.432c1.423.377 2.536-3.308 1.018-3.734"/></svg>No se encontraron resultados.</p>
+  </div>
+    <form class="flex items-center" onsubmit="event.preventDefault(); filterCards();">
+      <label for="searchInput" class="sr-only">Buscar negocios</label>
+      <div class="relative w-full">
+        <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+            <path fill="#aaa" d="M21.71 8.71c1.25-1.25.68-2.71 0-3.42l-3-3c-1.26-1.25-2.71-.68-3.42 0L13.59 4H11C9.1 4 8 5 7.44 6.15L3 10.59v4l-.71.7c-1.25 1.26-.68 2.71 0 3.42l3 3c.54.54 1.12.74 1.67.74c.71 0 1.36-.35 1.75-.74l2.7-2.71H15c1.7 0 2.56-1.06 2.87-2.1c1.13-.3 1.75-1.16 2-2C21.42 14.5 22 13.03 22 12V9h-.59zM20 12c0 .45-.19 1-1 1h-1v1c0 .45-.19 1-1 1h-1v1c0 .45-.19 1-1 1h-4.41l-3.28 3.28c-.31.29-.49.12-.6.01l-2.99-2.98c-.29-.31-.12-.49-.01-.6L5 15.41v-4l2-2V11c0 1.21.8 3 3 3s3-1.79 3-3h7zm.29-4.71L18.59 9H11v2c0 .45-.19 1-1 1s-1-.55-1-1V8c0-.46.17-2 2-2h3.41l2.28-2.28c.31-.29.49-.12.6-.01l2.99 2.98c.29.31.12.49.01.6"/>
+          </svg>
+        </div>
+        <input
+          type="text"
+          id="searchInput"
+          class="shadow-md shadow-gray-950 bg-gray-800/50 border-gray-600 text-sm rounded-lg block w-80 border ps-10 p-2.5 placeholder-gray-400 text-white"
+          placeholder="Buscar negocios"
+          aria-label="Buscar negocios"
+          required
+        />
+      </div>
+      <button
+        type="submit"
+        class="shadow-md shadow-gray-950 mr-3 p-3 ms-2 text-sm font-medium text-white bg-gray-900/60 rounded-full border border-gray-700 hover:bg-gray-800/70 cursor-pointer"
+      >
+        <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+          <path stroke="#999" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+        </svg>
+        <span class="sr-only">Buscar</span>
+      </button>
+    </form>
+    
+    <div class="contenedor-resultados">
+      <div id="show-resultados">
+        
+      </div>
+    </div>
+  </div>
+
+  <script is:inline>
+    const filterCards = () => {
+  const searchText = document.getElementById('searchInput').value.toLowerCase();
+  const cards = document.querySelectorAll('.card');
+  let hasResults = false;
+
+  cards.forEach((card) => {
+    const title = card.querySelector('h5')?.textContent.toLowerCase() || '';
+    const description = card.querySelector('p')?.textContent.toLowerCase() || '';
+    const small = card.querySelector('small')?.textContent.toLowerCase() || '';
+    const p = card.querySelector('p')?.textContent.toLowerCase() || '';
+    const a = card.querySelector('a')?.textContent.toLowerCase() || '';
+    const label = card.querySelector('label')?.textContent.toLowerCase() || '';
+    const div = card.querySelector('div')?.textContent.toLowerCase() || '';
+    const ul = card.querySelector('ul')?.textContent.toLowerCase() || '';
+    const li = card.querySelector('li')?.textContent.toLowerCase() || '';
+    const h1 = card.querySelector('h1')?.textContent.toLowerCase() || '';
+    const h2 = card.querySelector('h2')?.textContent.toLowerCase() || '';
+    const h3 = card.querySelector('h3')?.textContent.toLowerCase() || '';
+    const h5 = card.querySelector('h5')?.textContent.toLowerCase() || '';
+    const estado = card.querySelector('h6')?.textContent.toLowerCase() || '';
+    const span = card.querySelector('span')?.textContent.toLowerCase() || '';
+    const images = card.querySelector('img')?.textContent.toLowerCase() || '';
+    const veinticuatro = card.querySelector('p')?.textContent.toLowerCase() || '';
+    const soloredes = card.querySelector('p')?.textContent.toLowerCase() || '';
+    const enviogratis = card.querySelector('small')?.textContent.toLowerCase() || '';
+    const enviodomicilio = card.querySelector('small')?.textContent.toLowerCase() || '';
+    
+
+
+    if (title.includes(searchText) || description.includes(searchText)  || a.includes(searchText) || label.includes(searchText) || div.includes(searchText) || ul.includes(searchText)
+    || li.includes(searchText) || h1.includes(searchText) || h2.includes(searchText) || h3.includes(searchText) || h5.includes(searchText) || estado.includes(searchText) || span.includes(searchText)
+    || p.includes(searchText) || small.includes(searchText) || veinticuatro.includes(searchText) || soloredes.includes(searchText) || images.includes(searchText) || enviogratis.includes(searchText)
+    || enviodomicilio.includes(searchText)) {
+      card.classList.remove('hidden'); // Mostrar tarjeta
+      hasResults = true;
+    } else {
+      card.classList.add('hidden'); // Ocultar tarjeta sin eliminarla
+    }
+  });
+
+  // Mostrar u ocultar el mensaje de "No hay resultados"
+  const noResultsMessage = document.getElementById('noResultsMessage');
+  noResultsMessage?.classList.toggle('hidden', hasResults);
+};
+
+// Agregar event listener para búsqueda en tiempo real
+document.getElementById('searchInput').addEventListener('input', filterCards);
+
+// Evitar que el formulario se envíe al presionar "Enter"
+document.querySelector('form').addEventListener('submit', (event) => {
+  event.preventDefault();
+  filterCards();
+});
+
+  </script>
