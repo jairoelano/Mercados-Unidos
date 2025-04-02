@@ -519,6 +519,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     imageInput.addEventListener('click', (e) => {
       e.preventDefault();
       myWidget.open();
+      alert('Imagenes de mala calidad serán descartadas. Tamaño max. 1920×1080 px. Peso max. 5 mb.')
     });
   } catch (error) {
     console.error("Cloudinary no está disponible:", error);
