@@ -2,23 +2,23 @@
 import type { Card } from '../types/card';
 
 
-import imagen1 from '../../public/IMGs/i3.png';
-import imagen2 from '../../public/IMGs/i4.png';
-import imagen3 from '../../public/IMGs/i5.png';
-import imagen4 from '../../public/IMGs/nego2.jpg';
-import imagen5 from '../../public/IMGs/nego3.jpg';
-import imagen6 from '../../public/IMGs/nego4.jpg';
+import imagen1 from '../../public/IMGs/i3.webp';
+import imagen2 from '../../public/IMGs/i4.webp';
+import imagen3 from '../../public/IMGs/i5.webp';
+import imagen4 from '../../public/IMGs/nego2.webp';
+import imagen5 from '../../public/IMGs/nego3.webp';
+import imagen6 from '../../public/IMGs/nego4.webp';
 import imagen7 from '../../public/IMGs/nego1.webp';
-import imagen8 from '../../public/IMGs/nego5.jpg';
-import imagen9 from '../../public/IMGs/tiendalogo.png';
-import imagen10 from '../../public/IMGs/dietetica.jpg';
-import imagen11 from '../../public/IMGs/dietetica1.jpg';
-import imagen12 from '../../public/IMGs/doc.jpg';
-import imagen13 from '../../public/IMGs/doc2.jpg';
-import imagen14 from '../../public/IMGs/pizzeria1.jpg';
-import imagen15 from '../../public/IMGs/pizzeria2.jpg';
-import imagen16 from '../../public/IMGs/resto.jpg';
-import imagen17 from '../../public/IMGs/resto2.jpg';
+import imagen8 from '../../public/IMGs/nego5.webp';
+import imagen9 from '../../public/IMGs/tiendalogo.webp';
+import imagen10 from '../../public/IMGs/dietetica.webp';
+import imagen11 from '../../public/IMGs/dietetica1.webp';
+import imagen12 from '../../public/IMGs/doc.webp';
+import imagen13 from '../../public/IMGs/doc2.webp';
+import imagen14 from '../../public/IMGs/pizzeria1.webp';
+import imagen15 from '../../public/IMGs/pizzeria2.webp';
+import imagen16 from '../../public/IMGs/resto.webp';
+import imagen17 from '../../public/IMGs/resto2.webp';
 
 export const cards: Card[] = [
   {
