@@ -318,9 +318,9 @@ const siteKey = "0x4AAAAAABCNmOzraV7rhN1s";
                 <button id="eliminar-todas-btn" class="hidden cursor-pointer items-center gap-2 bg-transparent text-gray-600 hover:text-gray-800 px-3 py-1  transition-colors text-sm font-medium mt-2"><!-- SVG inline (icono de basura horizontal) --><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="inline-block"><path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg><span></span></button>
             </div>
             <!-- Recaptcha -->
-            <div class="flex">
-              <div class="cf-turnstile mb-5" data-sitekey={siteKey}></div>
-            </div>
+            
+              <div class="cf-turnstile mb-5 col-span-2" data-sitekey={siteKey}></div>
+            
               <!-- Botón de envío -->
               <button type="submit" id="submit-btn" class="border border-gray-400 text-lg cursor-pointer w-full shadow-md hover:shadow-gray-900 shadow-gray-800 flex justify-center text-white items-center focus:ring-1 focus:outline-none font-medium rounded-lg px-5 py-2.5 text-center bg-cyan-700/50 hover:bg-cyan-800 hover:border-gray-500 hover:text-gray-400">
                 Publicar
