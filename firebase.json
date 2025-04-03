@@ -1,6 +1,7 @@
 {
   "hosting": {
-    "public": "private",
+    "public": "public",
+    "site": "mercadosunidos",
     "ignore": [
       "firebase.json",
       "**/.*",

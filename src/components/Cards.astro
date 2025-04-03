@@ -179,37 +179,37 @@ const textos = [
         <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 20 20"><path fill="#789" d="M11.67 8.537a.3.3 0 0 0-.302.296v2.212a.3.3 0 0 0 .303.296h6.663a.3.3 0 0 0 .303-.296V8.833a.3.3 0 0 0-.303-.296zm4.086-7.036c.922.044 1.585.226 2.005.612c.415.382.628.935.67 1.667v2.097a.674.674 0 0 1-.681.666a.674.674 0 0 1-.682-.666l.001-2.059c-.022-.38-.113-.616-.243-.736c-.126-.116-.51-.22-1.103-.25H2.647c-.537.02-.886.122-1.055.267c-.13.111-.228.417-.229.946l-.003 11.77c.05.514.163.857.308 1.028c.11.13.451.26.953.324h13.116c.614.012.976-.08 1.098-.203c.135-.137.233-.497.233-1.086v-2.045c0-.367.305-.666.682-.666c.376 0 .681.299.681.666v2.045c0 .9-.184 1.573-.615 2.01c-.444.45-1.15.63-2.093.61L2.54 18.495c-.897-.104-1.54-.35-1.923-.803c-.347-.41-.54-.995-.617-1.813V4.044c.002-.876.212-1.535.694-1.947c.442-.38 1.08-.565 1.927-.597zm2.578 5.704c.92 0 1.666.729 1.666 1.628v2.212c0 .899-.746 1.628-1.666 1.628h-6.663c-.92 0-1.666-.73-1.666-1.628V8.833c0-.899.746-1.628 1.666-1.628zm-4.997 1.94c-.46 0-.833.36-.833.803s.373.803.833.803s.833-.36.833-.803s-.373-.804-.833-.804"/></svg>
         <h3 class="p-2font-normal text-gray-300 ">Metodos de pago</h3>
       </div>
-      <div class="border border-gray-700 rounded-lg shadow-lg shadow-gray-950 grid grid-cols-2 content-between p-5">
+      <div class="border border-gray-700 rounded-lg shadow-lg shadow-gray-950 grid grid-cols-2 place-items-center p-5">
         <div set:html={card.todoslospagos} class="my-2" class:list={{ 'oculto': !card.todoslospagos || card.todoslospagos.trim() === '' }}></div>
-         <div class="flex gap-2 items-center my-2" class:list={{ 'oculto': !card.visa || card.visa.trim() === '' }}>
+         <div class="flex gap-2 items-center my-2 justify-start" class:list={{ 'oculto': !card.visa || card.visa.trim() === '' }}>
           <div set:html={card.visa}></div>
           <p class="text-gray-300 font-bold">{card.tarjetasvisa}</p>
         </div>
-        <div class="flex gap-2 items-center my-2 mr-5" class:list={{ 'oculto': !card.mastercard || card.mastercard.trim() === '' }}>
+        <div class="flex gap-2 items-center my-2 justify-start" class:list={{ 'oculto': !card.mastercard || card.mastercard.trim() === '' }}>
           <div set:html={card.mastercard}></div>
-          <p class="text-gray-300 font-bold">{card.tarjetasmaster}</p>
+          <p class="text-gray-300 font-bold w-28">{card.tarjetasmaster}</p>
         </div>
-        <div class="flex gap-2 items-center my-2" class:list={{ 'oculto': !card.iconcash || card.iconcash.trim() === '' }}>
+        <div class="flex gap-2 items-center my-2 justify-start" class:list={{ 'oculto': !card.iconcash || card.iconcash.trim() === '' }}>
           <div set:html={card.iconcash}></div>
           <p class="text-gray-300 font-bold">{card.efectivo}</p>
         </div>
-        <div class="flex gap-2 items-center my-2"class:list={{ 'oculto': !card.iconmercado || card.iconmercado.trim() === '' }}>
+        <div class="flex gap-2 items-center my-2 justify-start"class:list={{ 'oculto': !card.iconmercado || card.iconmercado.trim() === '' }}>
           <div set:html={card.iconmercado}></div>
           <p class="text-gray-300 font-bold">{card.mercadopago}</p>
         </div>
-        <div class="flex gap-2 items-center my-2" class:list={{ 'oculto': !card.cryptos || card.cryptos.trim() === '' }}>
-          <div set:html={card.cryptos}></div>
-          <p class="text-gray-300 font-bold">{card.crypto}</p>
-        </div>
-        <div class="flex gap-2 items-center my-2" class:list={{ 'oculto': !card.icondolares || card.icondolares.trim() === '' }}>
-          <div set:html={card.icondolares}></div>
-          <p class="text-gray-300 font-bold">{card.dolares}</p>
-        </div>
-        <div class="flex gap-2 items-center my-2 " class:list={{ 'oculto': !card.icondebito || card.icondebito.trim() === '' }}>
+        <div class="flex gap-2 items-center my-2 justify-start" class:list={{ 'oculto': !card.icondebito || card.icondebito.trim() === '' }}>
           <div set:html={card.icondebito}></div>
           <p class="text-gray-300 font-bold">{card.debito}</p>
         </div>
-        
+        <div class="flex gap-2 items-center my-2 justify-start" class:list={{ 'oculto': !card.cryptos || card.cryptos.trim() === '' }}>
+          <div set:html={card.cryptos}></div>
+          <p class="text-gray-300 font-bold">{card.crypto}</p>
+        </div>
+        <div class="flex gap-2 items-center my-2 justify-start" class:list={{ 'oculto': !card.icondolares || card.icondolares.trim() === '' }}>
+          <div set:html={card.icondolares}></div>
+          <p class="text-gray-300 font-bold">{card.dolares}</p>
+        </div>
+
       </div>
       </div>
    </div>
@@ -218,10 +218,10 @@ const textos = [
       <div class="flex items-center justify-between mb-2">
         <div class="flex gap-2 items-center">
           <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24"><path fill="#789" d="M12,1A11,11,0,1,0,23,12,11,11,0,0,0,12,1Zm0,20a9,9,0,1,1,9-9A9,9,0,0,1,12,21Z"/><rect width="2" height="7" x="11" y="6" fill="#fff" rx="1"><animateTransform attributeName="transform" dur="9s" repeatCount="indefinite" type="rotate" values="0 12 12;360 12 12"/></rect><rect width="2" height="9" x="11" y="11" fill="#456" rx="1"><animateTransform attributeName="transform" dur="0.75s" repeatCount="indefinite" type="rotate" values="0 12 12;360 12 12"/></rect></svg>
-          <h3 class="p-2font-normal text-gray-300 ">Horarios y Dias laborales</h3>
+          <h3 class="p-2font-normal text-gray-300 ">Horarios y Dias</h3>
         </div>
        
-        <div class="col-span-2 w-76 grid grid-cols-2 gap-1">
+        <div class="col-span-2 w-80 px-4 grid grid-cols-2 gap-1">
           <small set:html={card.decorrido}  class="text-black text-sm font-extrabold"></small>
           <small set:html={card.trabajocorrido}  class="text-black text-sm font-extrabold"></small>
           <small set:html={card.medioSabados}  class="text-black text-sm font-extrabold"></small>
