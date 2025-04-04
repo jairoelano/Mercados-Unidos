@@ -1,6 +1,19 @@
 @import "tailwindcss";
 @import 'flowbite';
 
+/* Ejemplo con Flexbox */
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+main {
+  flex: 1;
+}
+footer {
+  margin-top: auto;
+}
+
 /* styles.css */
 .custom-scrollbar::-webkit-scrollbar {
     width: 10px;

@@ -315,12 +315,12 @@ const siteKey = "0x4AAAAAABCNmOzraV7rhN1s";
     import { getFirestore, setDoc, doc, getDoc, enableIndexedDbPersistence } from 'https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js';
 
     const firebaseConfig = {
-        apiKey: "AIzaSyDavU9YjgE1MM8buptQ1hOOoohrsMOriCs",
-        authDomain: "comercios-unidos-se.firebaseapp.com",
-        projectId: "comercios-unidos-se",
-        storageBucket: "comercios-unidos-se.firebasestorage.app",
-        messagingSenderId: "561779340978",
-        appId: "1:561779340978:web:dfdf091ddec7db324dfbab"
+    apiKey: "AIzaSyDavU9YjgE1MM8buptQ1hOOoohrsMOriCs",
+    authDomain: "comercios-unidos-se.firebaseapp.com",
+    projectId: "comercios-unidos-se",
+    storageBucket: "comercios-unidos-se.firebasestorage.app",
+    messagingSenderId: "561779340978",
+    appId: "1:561779340978:web:dfdf091ddec7db324dfbab"
     };
 
     const app = initializeApp(firebaseConfig);
@@ -863,7 +863,7 @@ function actualizarMensajeHora() {
                 const errorMessageMetodos = document.getElementById('error-message-metodos');
                 const errorMessageDias = document.getElementById('error-message-dias');
                 const errorMensajeNombre = document.getElementById('validacion-nombre');
-                const errorMensajeComercio = document.getElementById('validacion-profesion');
+                const errorMensajeProfesion = document.getElementById('validacion-profesion');
                 const errorMensajeEmail = document.getElementById('validacion-email');
                 const errorMensajeTelefono = document.getElementById('validacion-telefono');
                 const errorMensajeDireccion = document.getElementById('validacion-direccion');
@@ -876,16 +876,16 @@ function actualizarMensajeHora() {
                 
                 if (profesion === "") {
                 alert('¡Porfavor! Coloca el tipo de profesion u oficio')
-                errorMensajeComercio.textContent = '❌ Coloca el tipo de profesiòn / oficio';
-                errorMensajeComercio.style.display = 'block';
-                errorMensajeComercio.classList.add ('text-xs', 'text-red-600', 'font-bold', 'mt-2');
+                errorMensajeProfesion.textContent = '❌ Coloca el tipo de profesiòn / oficio';
+                errorMensajeProfesion.style.display = 'block';
+                errorMensajeProfesion.classList.add ('text-xs', 'text-red-600', 'font-bold', 'mt-2');
                 submitMessage.disabled = false;
                 submitMessage.textContent = 'Publicar';
                 event.preventDefault();
 
                 } else {
-                  errorMensajeComercio.style.display = 'none';
-                  errorMensajeComercio.classList.remove('text-red-600')
+                  errorMensajeProfesion.style.display = 'none';
+                  errorMensajeProfesion.classList.remove('text-red-600')
                 } 
 
                 if(nombre === ''){
@@ -898,7 +898,7 @@ function actualizarMensajeHora() {
                   event.preventDefault();
                 }else {
                   errorMensajeNombre.style.display = 'none';
-                  errorMensajeComercio.classList.remove('text-red-600')
+                  errorMensajeNombre.classList.remove('text-red-600')
                 }
                 
                 if (email === "") {
@@ -1017,7 +1017,7 @@ function actualizarMensajeHora() {
 
                 const nombreExiste = await verificarNombre(nombre);
                 if (nombreExiste) {
-                alert("El comercio ya existe o el nombre ya está en uso 🤷‍♂️");
+                alert("Esta profesió ya existe o el nombre ya está en uso 🤷‍♂️");
                 submitMessage.disabled = false;
                 submitMessage.textContent = 'Publicar';
                 return;
@@ -1101,28 +1101,28 @@ function actualizarMensajeHora() {
   });
 
   document.getElementById("profesion").addEventListener("keyup", function() {
-  const comercio = this.value;
-  const mensajeComercio = document.getElementById("validacion-comercio");
+  const profesion = this.value;
+  const mensajeProfesion = document.getElementById("validacion-profesion");
 
-  if (comercio === "") {
-    mensajeComercio.textContent = "❌ Debes poner tu profesion u oficio.";
-    mensajeComercio.style.display = "block";
-    mensajeComercio.style.color = "red"
-    mensajeComercio.classList.add('text-xs', 'p-2', 'font-bold') 
+  if (profesion === "") {
+    mensajeProfesion.textContent = "❌ Debes poner tu profesion u oficio.";
+    mensajeProfesion.style.display = "block";
+    mensajeProfesion.style.color = "red"
+    mensajeProfesion.classList.add('text-xs', 'p-2', 'font-bold') 
     return; 
   }
   const regex = /^[A-Za-zÁáÉéÍíÓóÚúÑñ\s]+$/;
 
-  if (regex.test(comercio)) {
-    mensajeComercio.textContent = "✅ Profesión u oficio válido";
-    mensajeComercio.style.display = "block";
-    mensajeComercio.style.color = "green"
-    mensajeComercio.classList.add('text-xs', 'p-2', 'font-bold')
+  if (regex.test(profesion)) {
+    mensajeProfesion.textContent = "✅ Profesión u oficio válido";
+    mensajeProfesion.style.display = "block";
+    mensajeProfesion.style.color = "green"
+    mensajeProfesion.classList.add('text-xs', 'p-2', 'font-bold')
   } else {
-    mensajeComercio.textContent = "❌ No válido. Ej: Medico / Herrero";
-    mensajeComercio.style.display = "block";
-    mensajeComercio.style.color = "red"
-    mensajeComercio.classList.add('text-xs', 'p-2', 'font-bold')
+    mensajeProfesion.textContent = "❌ No válido. Ej: Medico / Herrero";
+    mensajeProfesion.style.display = "block";
+    mensajeProfesion.style.color = "red"
+    mensajeProfesion.classList.add('text-xs', 'p-2', 'font-bold')
   }
 });
 
