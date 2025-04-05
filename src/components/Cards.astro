@@ -338,7 +338,6 @@ const textos = [
           <div  class="mb-8 estadisticas-tarjeta p-4 bg-gray-900/20 border border-gray-600 rounded-lg shadow-lg shadow-gray-950 mt-4 text-gray-300 text-center" data-card-id={card.id}>Sin calificaciones ✰</div>
           <div class="flex gap-3 items-center">
           <button id='abrir-modal-boton' data-modal-target="popup-reseñas" data-modal-toggle="popup-reseñas" type="button" class="shadow-md shadow-black abrir-modal-boton dejar-reseña-btn cursor-pointer w-auto text-center flex  gap-2 text-black border border-black hover:opacity/50 hover:bg-gray-950/10 hover:shadow-md hover:shadow-gray-950 font-medium rounded-lg text-sm px-5 py-2.5"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 16 16"><path fill="#000" fill-rule="evenodd" d="M10 9.5h.621l.44.44l1.51 1.51a.174.174 0 0 0 .295-.136l-.112-1.454l-.062-.809l.642-.495C14.037 8.016 14.5 7.211 14.5 6c0-1.214-.465-2.019-1.17-2.56c-.754-.578-1.902-.94-3.33-.94s-2.576.362-3.33.94C5.966 3.98 5.5 4.786 5.5 6s.465 2.019 1.17 2.56c.754.578 1.902.94 3.33.94m.52 2.02l.99.99a1.673 1.673 0 0 0 2.851-1.312l-.111-1.453C15.33 8.91 16 7.663 16 6c0-3.333-2.686-5-6-5c-2.127 0-3.995.687-5.06 2.06C2.131 3.384 0 5.03 0 8c0 1.663.669 2.911 1.75 3.745l-.111 1.453A1.673 1.673 0 0 0 4.49 14.51L6 13c1.803 0 3.42-.493 4.52-1.48M4.143 4.736Q4.001 5.32 4 6c0 2.905 2.04 4.544 4.759 4.918c-.717.366-1.654.582-2.759.582h-.621l-.44.44l-1.51 1.51a.174.174 0 0 1-.295-.136l.112-1.454l.062-.809l-.642-.495C1.963 10.016 1.5 9.211 1.5 8c0-1.214.465-2.019 1.17-2.56c.391-.3.887-.541 1.473-.704" clip-rule="evenodd"/></svg>Dejar reseña</button>
-          <button id='logout-btn' type="button" class="logout-btn cursor-pointer w-auto text-center hidden text-black border border-black hover:opacity/50 hover:bg-gray-950/10 hover:shadow-xs hover:shadow-gray-700/70 font-medium rounded-lg text-sm px-5 py-2.5">Logout</button>
           </div>
         </div>
       </div>
@@ -394,8 +393,8 @@ const textos = [
 
 <script type='module'>
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
-import { getFirestore, collection, query, where, onSnapshot, setDoc, doc, orderBy, deleteDoc, getDoc } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js";
-import { getAuth, signOut } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-auth.js";
+import { getFirestore, collection, query, where, onSnapshot, setDoc, doc, orderBy, deleteDoc, getDoc, enableIndexedDbPersistence } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js";
+import { getAuth, onAuthStateChanged} from "https://www.gstatic.com/firebasejs/11.4.0/firebase-auth.js";
 
 // Firebase Configuration
 const firebaseConfig = {
@@ -409,60 +408,17 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
-const auth = getAuth();
+const auth = getAuth(app);
 
-// Cerrar sesión
-function logout() {
-  // 1. Verificar si auth está inicializado
-  if (!auth) {
-    console.error("Firebase Auth no está inicializado");
-    return;
-  }
-
-  // 2. Cerrar sesión con Firebase
-  signOut(auth)
-    .then(() => {
-      console.log("Sesión cerrada exitosamente");
-      
-      // 3. Limpiar datos locales
-      localStorage.removeItem('isLoggedIn');
-      localStorage.removeItem('userData'); // Limpiar datos adicionales si existen
-      
-      // 4. Redirección mejorada
-      window.location.href = '/'; // Mejor que reload para SPA
-    })
-    .catch((error) => {
-      console.error("Error al cerrar sesión:", error);
-      
-      // 5. Manejo específico de errores
-      if (error.code === "auth/network-request-failed") {
-        alert("Fallo la conexión");
-      } else {
-        alert("Error al cerrar sesión");
-      }
-    });
-}
-
-// 6. Event listeners mejorados
-function setupLogoutButtons() {
-  document.querySelectorAll(".logout-btn").forEach(button => {
-    // Evitar múltiples listeners
-    button.removeEventListener("click", logout); 
-    button.addEventListener("click", (e) => {
-      e.preventDefault();
-      logout();
-    });
-  });
-}
-
-// 7. Ejecutar cuando el DOM esté listo
-document.addEventListener('DOMContentLoaded', setupLogoutButtons);
+enableIndexedDbPersistence(db).catch((err) => {
+  console.warn("Persistencia offline:", err.message);
+});
 
 let isSubmitting = false;
 
 document.querySelectorAll('.comment-form').forEach(form => {
   let selectedRating = 0;
-  const stars = form.querySelectorAll('.star-rating .star'); // Selecciona solo las estrellas dentro de este formulario
+  const stars = form.querySelectorAll('.star-rating .star'); 
 
   stars.forEach(star => {
     star.addEventListener('click', (e) => {
@@ -485,6 +441,7 @@ document.querySelectorAll('.comment-form').forEach(form => {
     e.preventDefault();
     
     if (isSubmitting) return;
+
     isSubmitting = true;
     
     submitButton.disabled = true;
@@ -627,6 +584,16 @@ function mostrarComentarios(cardId) {
       `;
     });
     asignarEventosComentarios();
+    (error) => { // Nuevo manejador de errores
+    if (error.code === 'unavailable') {
+      console.log("Modo offline activado - Mostrando datos cacheados");
+      getDocsFromCache(q).then((cachedSnapshot) => {
+        // Procesa los datos cacheados igual que el snapshot online
+      });
+    } else {
+      console.error("Error de Firestore:", error);
+    }
+  }
   });
 }
 
@@ -717,6 +684,13 @@ function calcularEstadisticas(cardId) {
     }
     
     estadisticasDiv.innerHTML = estadisticasHTML;
+    (error) => { // Mismo manejador de errores
+    if (error.code === 'unavailable') {
+      getDocsFromCache(comentariosRef).then((cachedSnapshot) => {
+        // Procesa datos cacheados
+      });
+    }
+  }
   });
 }
 
@@ -728,72 +702,56 @@ document.querySelectorAll("[data-card-id]").forEach(card => {
 
 // verificar login
 
-function verificarEstadoDeLoginYDeshabilitarBoton() {
-  // Esperar a que el DOM esté listo
-  document.addEventListener('DOMContentLoaded', () => {
-    const estaLogueado = localStorage.getItem('isLoggedIn') === 'true';
-    const logoutBtn = document.querySelector(".logout-btn");
+// function verificarEstadoDeLoginYDeshabilitarBoton() {
+//   const auth = getAuth();
 
-    if (!logoutBtn) {
-      console.error("No se encontró el botón de logout");
-      return;
-    }
+//   onAuthStateChanged(auth, (user) => {
+//     const estaLogueado = !!user;
 
-    // Mostrar/ocultar elementos según el estado de login
-    const botonesAbrirModal = document.querySelectorAll('.abrir-modal-boton');
-    const cajasComentarios = document.querySelectorAll('.caja-comentarios');
+//     // Selecciona todas las tarjetas y les aplica la misma lógica
+//     const cards = document.querySelectorAll('[data-card-id]');
 
-    if (estaLogueado) {
-      // Usuario logueado
-      botonesAbrirModal.forEach(boton => {
-        boton.textContent = 'Cambiar usuario';
-        boton.classList.remove('hidden');
-      });
+//     cards.forEach(card => {
+//       const boton = card.querySelector('.abrir-modal-boton');
+//       const caja = card.querySelector('.caja-comentarios');
+      
+//       if (boton && caja) {
+//         boton.textContent = estaLogueado ? 'Cambiar usuario' : 'Dejá tu reseña';
+//         boton.classList.toggle('hidden', !estaLogueado);
+//         caja.classList.toggle('hidden', !estaLogueado);
+//       }
+//     });
+//   });
+// }
 
-      cajasComentarios.forEach(caja => {
-        caja.classList.remove('hidden');
-      });
 
-      logoutBtn.classList.remove('hidden');
-    } else {
-      // Usuario no logueado
-      botonesAbrirModal.forEach(boton => {
-        boton.textContent = 'Dejá tu reseña';
-      });
-
-      cajasComentarios.forEach(caja => {
-        caja.classList.add('hidden');
-      });
-
-      logoutBtn.classList.add('hidden');
-    }
-  });
-}
+// verificarEstadoDeLoginYDeshabilitarBoton();
 
 // ampliar imagen
 
-function abrirEnNuevaPestana(url) {
-    const ventana = window.open('', '_blank');
-    ventana.document.write(`
-      <html>
-        <head><title>Imagen</title></head>
-        <body style="margin: 0; background: #000;">
-          <img src="${url}" style="max-width: 100%; height: auto; display: block; margin: auto;">
-        </body>
-      </html>
-    `);
-    ventana.document.close();
-  }
+// function abrirEnNuevaPestana(url) {
+//     const ventana = window.open('', '_blank');
+//     ventana.document.write(`
+//       <html>
+//         <head><title>Imagen</title></head>
+//         <body style="margin: 0; background: #000;">
+//           <img src="${url}" style="max-width: 100%; height: auto; display: block; margin: auto;">
+//         </body>
+//       </html>
+//     `);
+//     ventana.document.close();
+//   }
 
 
 // Llamar a la función al cargar la página
-verificarEstadoDeLoginYDeshabilitarBoton();
+// verificarEstadoDeLoginYDeshabilitarBoton();
 
 // Llamar al cargar la página y cuando cambie el estado de login
-document.addEventListener('DOMContentLoaded', verificarEstadoDeLoginYDeshabilitarBoton);
+// document.addEventListener('DOMContentLoaded', verificarEstadoDeLoginYDeshabilitarBoton);
 
-// verificar estado
 
+
+// verificar estado de apertura
 
   function verificarEstado() {
     // Obtén todas las cards

@@ -12,9 +12,13 @@
 				<img
 					src="/IMGs/logo.png" class="shadow-md shadow-gray-950 hover:shadow-gray-400 hover:shadow-md h-12 w-12 border-3 rounded-full border-cyan-300" alt="Logo"/>
 			</a>
+			
 			<div
-				class="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse"
+				class="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse gap-5"
 			>
+			<button class="cursor-pointer hover:opacity-60" id="btn-logout">
+				<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24"><path fill="#fff" d="M11.5 2a5.5 5.5 0 1 0 0 11a5.5 5.5 0 0 0 0-11m9.329 11.757l1.414 1.415L19.415 18l2.828 2.828l-1.414 1.415L18 19.414l-2.828 2.829l-1.414-1.415L16.586 18l-2.828-2.828l1.414-1.415L18 16.586zM12.876 14a6.47 6.47 0 0 0-1.376 4c0 1.509.514 2.897 1.376 4H2v-2a6 6 0 0 1 6-6z"/></svg>
+			</button>
 			
 				<button
 				data-modal-target="publicar-modal" data-modal-toggle="publicar-modal"
@@ -67,21 +71,88 @@
 
 
 
-<script is:inline>
-	// Código JavaScript que se ejecuta en el cliente
-	document.addEventListener('DOMContentLoaded', () => {
-	  // Selecciona todas las opciones del dropdown
-	  const dropdownOptions = document.querySelectorAll('.dropdown-option');
+<script type="module">
+	import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
+	import { getAuth, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-auth.js";
   
-	  // Añade un evento de clic a cada opción
-	  dropdownOptions.forEach(option => {
-		option.addEventListener('click', () => {
-		  // Oculta el dropdown
-		  const dropdown = document.getElementById('mega-menu');
-		  dropdown.classList.add('hidden');
-		});
-	  });
-	})
+	
+	const firebaseConfig = {
+	  apiKey: "AIzaSyDavU9YjgE1MM8buptQ1hOOoohrsMOriCs",
+	  authDomain: "comercios-unidos-se.firebaseapp.com",
+	  projectId: "comercios-unidos-se",
+	  storageBucket: "comercios-unidos-se.firebasestorage.app",
+	  messagingSenderId: "561779340978",
+	  appId: "1:561779340978:web:dfdf091ddec7db324dfbab"
+	};
+  
+	
+	const app = initializeApp(firebaseConfig);
+	const auth = getAuth();
+  
+	
+	function setupLogout() {
+  const logoutBtn = document.getElementById('btn-logout');
+  
+  if (logoutBtn) {
+    logoutBtn.addEventListener('click', async () => {
+      try {
+        await signOut(auth);
+        console.log('Sesión cerrada correctamente');
+        
+        // Actualización consistente con el login
+        localStorage.setItem('isLoggedIn', 'false');
+        console.log('Estado de login actualizado:', localStorage.getItem('isLoggedIn'));
+        
+        // Limpieza de URL como en el login
+        window.history.pushState({}, '', '/');
+        
+        // Recarga mejorada
+        window.location.reload();
+        
+        // Feedback al usuario (similar al login)
+        alert('¡Sesión cerrada correctamente! Vuelve pronto 👋');
+        
+      } catch (error) {
+        console.error('Error al cerrar sesión:', error);
+        
+        // Manejo de errores consistente con login
+        if (error.code === "auth/network-request-failed") {
+          alert("Error de conexión. Intenta cerrar sesión nuevamente.");
+        } else {
+          alert("Error al cerrar sesión. Por favor intenta de nuevo.");
+        }
+      }
+    });
+  }
+}
+
+// Manejo del estado de autenticación mejorado
+function checkAuthState() {
+  onAuthStateChanged(auth, (user) => {
+    const logoutBtn = document.getElementById('btn-logout');
+    const loginBtn = document.getElementById('login-google'); 
+    if (logoutBtn) {
+      logoutBtn.style.display = user ? 'block' : 'none';
+    }
+    
+    // Opcional: Actualizar también el botón de login
+    if (loginBtn) {
+      loginBtn.style.display = user ? 'none' : 'block';
+    }
+    
+    // Sincronización con localStorage como en login
+    localStorage.setItem('isLoggedIn', user ? 'true' : 'false');
+  });
+}
+
+// Inicialización mejorada
+document.addEventListener('DOMContentLoaded', () => {
+  setupLogout();
+  checkAuthState();
+  
+  // Opcional: Verificación inicial de estado
+  console.log('Estado de login inicial:', localStorage.getItem('isLoggedIn'));
+});
   </script>
 
   

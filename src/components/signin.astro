@@ -75,7 +75,7 @@
     document.getElementById("login-google").addEventListener("click", () => {
     signInWithPopup(auth, googleProvider).then(result => {
         console.log("Google login exitoso:", result.user);
-        localStorage.setItem('isLoggedIn', 'true'); // Guardamos el estado de login
+        localStorage.setItem('isLoggedIn', 'true'); 
         console.log('Estado de login guardado en localStorage:', localStorage.getItem('isLoggedIn'));
         
         const username = result.user.displayName;  

@@ -1,18 +1,7 @@
 @import "tailwindcss";
 @import 'flowbite';
 
-/* Ejemplo con Flexbox */
-body {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
-main {
-  flex: 1;
-}
-footer {
-  margin-top: auto;
-}
+
 
 /* styles.css */
 .custom-scrollbar::-webkit-scrollbar {
@@ -102,62 +91,6 @@ input:-webkit-autofill:hover,
 input:-webkit-autofill:focus {
   background-color: rgba(0, 0, 0, 0.7) !important; /* Mantiene el fondo oscuro al interactuar */
   color: white !important;
-}
-
-
-#cusdis_thread {
-  max-height: none !important;
-  height: auto !important;
-  overflow: visible !important;
-}
-
-#cusdis_thread iframe {
-  min-height: 500px !important;
-  height: auto !important;
-  width: 100% !important;
-}
-
-#cusdis_thread iframe{
-  color: white !important
-}
-
-/* Ajustar los inputs y textarea */
-#cusdis_thread input,
-#cusdis_thread textarea {
-  border: 2px solid #ccc !important; /* Borde personalizado */
-  border-radius: 8px !important; /* Esquinas redondeadas */
-  padding: 10px !important; /* Espaciado interno */
-  font-size: 16px !important; /* Tamaño del texto */
-  color: #333 !important; /* Color del texto */
-  width: 100% !important; /* Que ocupe todo el ancho disponible */
-}
-
-/* Cambiar el fondo y color del texto */
-#cusdis_thread textarea {
-  background-color: #f9f9f9 !important; /* Fondo más claro */
-  min-height: 150px !important; /* Altura mínima */
-}
-
-/* Personalizar el botón de enviar */
-#cusdis_thread button {
-  background-color: #007bff !important; /* Color azul */
-  color: white !important; /* Texto en blanco */
-  padding: 10px 15px !important;
-  border-radius: 5px !important;
-  font-weight: bold !important;
-  transition: background 0.3s !important;
-}
-
-#cusdis_thread button:hover {
-  background-color: #0056b3 !important; /* Color más oscuro al pasar el mouse */
-}
-
-#cusdis_thread label {
-  font-size: 14px !important;
-  font-weight: bold !important;
-  color: #555 !important;
-  margin-bottom: 5px !important;
-  display: block !important; /* Para que no se vea inline */
 }
 
 
